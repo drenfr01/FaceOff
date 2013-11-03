@@ -3,12 +3,21 @@
 </head>
 
 <body>
-  {{> main}} 
+  {{> main}}
 </body>
 
 <template name="main">
-  <table>
-    <tr><td>New game</td><td>Join A Game</td></tr>
-    <tr><td>Play for Fun</td><td>Statistics</td></tr>
-  </table> 
+  {{#if stateIs "landing"}}
+    <table>
+      <tr><td id="new_game">New game</td><td>Join A Game</td></tr>
+      <tr><td>Play for Fun</td><td>Statistics</td></tr>
+    </table>
+  {{/if}}
+  {{#if stateIs "in_game"}}
+    <div id="game_header">Click your favorite</div>
+    <table>
+      <tr><td>Image 1 goes here</td><td>Image 2 goes here</td></tr>
+    </table>
+    <div>Time bar goes here</div>
+  {{/if}}
 </template>
