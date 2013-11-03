@@ -11,7 +11,11 @@ if (Meteor.isClient) {
       //Set up a new game here
       Session.set("state", "in_game");
       Meteor.setInterval( getNextImages , 10000);
-      Session.set("current_images", {})
+      // TODO: Use random card function
+      var cards = Cards.find()
+      cards.forEach( function (card) {
+        Cards.update( {_id: card._id}, {$set: { in_play: 1} } )
+      })
     }
   });
 
@@ -24,14 +28,16 @@ if (Meteor.isClient) {
   }
 
   Template.main.displayedImages = function () {
-    return Cards.find();
+    return Cards.find( {in_play: 1} )
   }
 
   getNextImages = function () {
-    //    
     console.log("getNextImages has been called")
-    var images = Cards.find();
-    //Session.set("current_images", images )
+    Cards.find().forEach( function (card) {
+      Cards.update( {_id: card._id}, {$set: { in_play: 0 } } );
+    })
+    // TODO: Use random card function
+    
   }
 }
 
@@ -42,8 +48,9 @@ if (Meteor.isServer) {
     if (Cards.find().count() == 0) {
       var image_paths = ['0001.jpg'
                         ,'0002.jpg'];
+    //path: relative path to file, active: still in the game, in_play: currently on the board
     for (var i = 0; i < image_paths.length; i++)
-      Cards.insert({path: image_paths[i], active: 1});
+      Cards.insert({path: image_paths[i], active: 1, in_play: 0});
     }
   });
 }
