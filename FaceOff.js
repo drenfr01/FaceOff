@@ -8,7 +8,10 @@ if (Meteor.isClient) {
 
   Template.main.events({
     'click #new_game' : function () {
+      //Set up a new game here
       Session.set("state", "in_game");
+      Meteor.setInterval( getNextImages , 10000);
+      Session.set("current_images", {})
     }
   });
 
@@ -23,6 +26,13 @@ if (Meteor.isClient) {
   Template.main.displayedImages = function () {
     return Cards.find();
   }
+
+  getNextImages = function () {
+    //    
+    console.log("getNextImages has been called")
+    var images = Cards.find();
+    //Session.set("current_images", images )
+  }
 }
 
 if (Meteor.isServer) {
@@ -30,12 +40,11 @@ if (Meteor.isServer) {
     //Set the initial State of the application
     Cards.remove({});
     if (Cards.find().count() == 0) {
-      var image_paths = [
-        '0001.jpg'
-        ,'0002.jpg'
-      ];
+      var image_paths = ['0001.jpg'
+                        ,'0002.jpg'];
     for (var i = 0; i < image_paths.length; i++)
       Cards.insert({path: image_paths[i], active: 1});
     }
   });
 }
+
