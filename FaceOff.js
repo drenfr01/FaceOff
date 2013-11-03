@@ -19,6 +19,10 @@ if (Meteor.isClient) {
   Template.main.stateIs = function (state) {
     return Session.get("state") === state
   }
+
+  Template.main.displayedImages = function () {
+    return Cards.find();
+  }
 }
 
 if (Meteor.isServer) {
@@ -26,6 +30,12 @@ if (Meteor.isServer) {
     //Set the initial State of the application
     Cards.remove({});
     if (Cards.find().count() == 0) {
-      }
+      var image_paths = [
+        '0001.jpg'
+        ,'0002.jpg'
+      ];
+    for (var i = 0; i < image_paths.length; i++)
+      Cards.insert({path: image_paths[i], active: 1});
+    }
   });
 }

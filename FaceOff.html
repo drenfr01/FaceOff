@@ -16,8 +16,16 @@
   {{#if stateIs "in_game"}}
     <div id="game_header">Click your favorite</div>
     <table>
-      <tr><td>Image 1 goes here</td><td>Image 2 goes here</td></tr>
+      <tr>
+        {{#each displayedImages}}
+          {{> displayedImage}}
+        {{/each}}
+    </tr>
     </table>
     <div>Time bar goes here</div>
   {{/if}}
+</template>
+
+<template name="displayedImage">
+  <td><img src="{{path}}" alt="An Image"></td>
 </template>
