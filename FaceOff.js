@@ -45,8 +45,8 @@ if (Meteor.isClient) {
   }
 
   selectRandomCards = function(numberOfCards) {
-    var randomNumber = Math.floor(Math.random() * Cards.find().count()) + 1;
-    var cards = Cards.find({in_play: 0}, {limit: numberOfCards}, {skip: 3});
+    var randomNumber = Math.floor(Math.random() * (Cards.find().count()-1)) + 1;
+    var cards = Cards.find({in_play: 0}, {limit: numberOfCards, skip: randomNumber});
     console.log(cards)
     return cards
   }
