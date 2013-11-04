@@ -37,9 +37,22 @@ if (Meteor.isClient) {
   Template.main.displayedImages = function () {
     return Cards.find( {in_play: 1} )
   }
+  
+  //Want flash the winner and display the vote count. 
+  endVoting = function() {
+    //TODO: Use session variable here
+    //TODO: Handle ties
+    var winning_card = Cards.find({in_play: 1}, {sort: {votes: -1}, limit: 1})
+   
+    var winning_card_path = winning_card.fetch()[0].path
+    $(winning_card_path).css({'background-color': '10 px solid #967'}) 
+    console.log(winning_card_path) 
+    
+  }
 
   getNextImages = function () {
     //TODO: Build a function to set in_play
+    endVoting();
     Cards.find().forEach( function (card) {
       Cards.update( {_id: card._id}, {$set: { in_play: 0 } } );
     })
