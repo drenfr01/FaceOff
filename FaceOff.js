@@ -10,7 +10,7 @@ if (Meteor.isClient) {
     'click #new_game' : function () {
       //Set up a new game here
       Session.set("state", "in_game");
-      Meteor.setInterval( getNextImages , 2000);
+      Meteor.setInterval( getNextImages , 5000);
 
       //TODO: Build a function to set in_play
       selectRandomCards(2).forEach( function (id) {
@@ -18,6 +18,13 @@ if (Meteor.isClient) {
       })
     }
   });
+
+  Template.displayedImage.events({
+    'click' : function () {
+      Cards.update( {_id: this._id}, {$inc: { votes: 1} } )
+      console.log(this);
+    }
+  })
 
   Template.main.getState = function () {
     return Session.get("state");
@@ -32,18 +39,14 @@ if (Meteor.isClient) {
   }
 
   getNextImages = function () {
-    console.log("getNextImages has been called")
     //TODO: Build a function to set in_play
     Cards.find().forEach( function (card) {
       Cards.update( {_id: card._id}, {$set: { in_play: 0 } } );
     })
 
-    console.log(selectRandomCards(2))
-
     selectRandomCards(2).forEach(function (id) {
-      Cards.update( {_id: id}, {$set: { in_play: 1}})
+      Cards.update( {_id: id}, {$set: { in_play: 1, votes: 0} } );
     })
-    
   }
 
   selectRandomCards = function(numberOfCards) {
