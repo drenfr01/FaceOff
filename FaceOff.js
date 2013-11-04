@@ -13,8 +13,8 @@ if (Meteor.isClient) {
       Meteor.setInterval( getNextImages , 2000);
 
       //TODO: Build a function to set in_play
-      selectRandomCards(2).forEach( function (card) {
-        Cards.update( {_id: card._id}, {$set: { in_play: 1} } )
+      selectRandomCards(2).forEach( function (id) {
+        Cards.update( {_id: id}, {$set: { in_play: 1} } )
       })
     }
   });
@@ -38,17 +38,31 @@ if (Meteor.isClient) {
       Cards.update( {_id: card._id}, {$set: { in_play: 0 } } );
     })
 
-    selectRandomCards(2).forEach(function (card) {
-      Cards.update( {_id: card._id}, {$set: { in_play: 1}})
+    console.log(selectRandomCards(2))
+
+    selectRandomCards(2).forEach(function (id) {
+      Cards.update( {_id: id}, {$set: { in_play: 1}})
     })
     
   }
 
   selectRandomCards = function(numberOfCards) {
     var randomNumber = Math.floor(Math.random() * (Cards.find().count()-1)) + 1;
-    var cards = Cards.find({in_play: 0}, {limit: numberOfCards, skip: randomNumber});
-    console.log(cards)
-    return cards
+    var cards = Cards.find( {active: 1});
+    var cards_array = new Array(0);
+
+    //insert each path into the cards array
+    cards.forEach( function (card) {
+      cards_array.push( card._id );
+    })
+
+    var card1 = Random.choice(cards_array)
+    var filtered_cards_array = cards_array.filter( function (element) {
+      return element != card1
+    });
+    var card2 = Random.choice(filtered_cards_array);
+
+    return [card1, card2];
   }
 }
 
