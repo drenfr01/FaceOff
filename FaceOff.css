@@ -3,10 +3,28 @@
 table, tr, td {
   text-align:left;
   border: 1px solid black;
-  
+  width: inherit;
+  height: 100%;
 }
 
 img {
   height: 400px;
   width: 600px;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+}
+
+
+/* Landing Page Colors */
+#new_game { background-color: #00AF64;}
+#join_game { background-color: #1240AB;}
+#play_for_fun { background-color: #FFAA00;}
+#statistics { background-color: #FF4900;}
+
+.landing_page {
+  width: 50%;
+  height: 50%;
 }
