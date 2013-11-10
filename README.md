@@ -4,7 +4,7 @@ To Do/ Features list:
  * Play more than one game
  * Statistics
  * Metadata about images
- * -Implement visible timer-
+ * ~~Implement visible timer~~
  * Indicate winner of voting
  * Hide voting tally as we go
  * Implement a "deck" concept
