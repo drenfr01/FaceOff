@@ -10,3 +10,5 @@ To Do/ Features list:
  * Hide voting tally as we go
  * Implement a "deck" concept
  * Implement dropping cards from the game without any votes
+ * Improve Styling
+ * Investigate Less for styling
