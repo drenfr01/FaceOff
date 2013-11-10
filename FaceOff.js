@@ -1,6 +1,7 @@
 Users = new Meteor.Collection("users");
 Cards = new Meteor.Collection("cards");
 
+//Client code
 if (Meteor.isClient) {
   Meteor.startup(function () {
     Session.set("state", "landing")
@@ -10,7 +11,10 @@ if (Meteor.isClient) {
     'click #new_game' : function () {
       //Set up a new game here
       Session.set("state", "in_game");
-      Meteor.setInterval( getNextImages , 5000);
+      //Timer
+      // TODO: Add parametrized timer
+      setTimer(5, "getNextImages");
+      Meteor.setInterval( decrementTimer , 1000);
 
       //TODO: Build a function to set in_play
       selectRandomCards(2).forEach( function (id) {
@@ -37,19 +41,25 @@ if (Meteor.isClient) {
   Template.main.displayedImages = function () {
     return Cards.find( {in_play: 1} )
   }
-  
-  //Want flash the winner and display the vote count. 
+
+  Template.main.getTime = function() {
+    return Session.get("timer");
+  }
+
+  //Want flash the winner and display the vote count.
   endVoting = function() {
     //TODO: Use session variable here
     //TODO: Handle ties
     var winning_card = Cards.find({in_play: 1}, {sort: {votes: -1}, limit: 1})
-   
+
     var winning_card_path = winning_card.fetch()[0].path
-    $(winning_card_path).css({'background-color': '10 px solid #967'}) 
-    console.log(winning_card_path) 
-    
+    $(winning_card_path).css({'background-color': '10 px solid #967'})
+    console.log(winning_card_path)
+
   }
 
+  //Control flow for game
+  //This function will get called when the timer decrements to 0, and will drive the gameplay
   getNextImages = function () {
     //TODO: Build a function to set in_play
     endVoting();
@@ -60,6 +70,7 @@ if (Meteor.isClient) {
     selectRandomCards(2).forEach(function (id) {
       Cards.update( {_id: id}, {$set: { in_play: 1, votes: 0} } );
     })
+    setTimer(8, "getNextImages")
   }
 
   selectRandomCards = function(numberOfCards) {
@@ -82,6 +93,7 @@ if (Meteor.isClient) {
   }
 }
 
+//Server code
 if (Meteor.isServer) {
   Meteor.startup(function () {
     //Set the initial State of the application
@@ -101,6 +113,32 @@ if (Meteor.isServer) {
     for (var i = 0; i < image_paths.length; i++)
       Cards.insert({path: image_paths[i], active: 1, in_play: 0});
     }
+
+    //Clear certain session variables
+    // TODO: Store "session variables to reset somewhere"
+    //Session.set("timer", 0)
   });
 }
 
+setTimer = function(time, func) {
+  console.log(time, func, Session.get("timer"));
+  Session.set("timer", time);
+  Session.set("timer_function", func);
+}
+
+decrementTimer = function() {
+  Session.set("timer", Session.get("timer") - 1 )
+  console.log(Session.get("timer"));
+  console.log(Session.get("timer_function"));
+  if (Session.get("timer") == 0) {
+    //Currently we only support running functions without arguments
+    runFunction(Session.get("timer_function"));
+  }
+}
+
+function runFunction(name, arguments)
+{
+  switch(name) {
+    case "getNextImages": getNextImages(); break;
+  }
+}
