@@ -2,6 +2,7 @@ To Do/ Features list:
  * Upload images/store images in DB
  * Implement Join a game functionality -- Should be able to set Session game to the correct number and be golden
  * ~~Play more than one game~~
+ * ~~Model a game~~
  * Statistics
  * Metadata about images
  * ~~Implement visible timer~~
@@ -17,6 +18,7 @@ To Do/ Features list:
  * Unable to vote during vote showing screen
  * Add player hands
  * Add card ordering
+ * Refactor into seperate files
 
 Work in progress below this line
 ===========================================================
