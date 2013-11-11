@@ -50,6 +50,9 @@ if (Meteor.isClient) {
   //Want flash the winner and display the vote count.
   endVoting = function() {
       Session.set("game_state", "display_phase");
+      //Show votes during the winner stage
+     console.log(document.getElementById("votes").style);
+document.getElementById("votes").style.visibility="visible";
     //TODO: Use session variable here
     //TODO: Handle ties
     var winning_card = Cards.find({in_play: 1}, {sort: {votes: -1}, limit: 1})
@@ -64,6 +67,8 @@ if (Meteor.isClient) {
   //This function will get called when the timer decrements to 0, and will drive the gameplay
   getNextImages = function () {
     Session.set("game_state", "voting_phase")
+    console.log(document.getElementById("votes").style)
+    document.getElementById("votes").style.visibility="hidden";
     //TODO: Build a function to set in_play
     Cards.find().forEach( function (card) {
       Cards.update( {_id: card._id}, {$set: { in_play: 0 } } );
