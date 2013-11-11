@@ -13,7 +13,7 @@ if (Meteor.isClient) {
       Session.set("state", "in_game");
       //Timer
       // TODO: Add parametrized timer
-      setTimer(5, "getNextImages");
+      setTimer(5, "endVoting");
       Meteor.setInterval( decrementTimer , 1000);
 
       //TODO: Build a function to set in_play
@@ -30,8 +30,9 @@ if (Meteor.isClient) {
     }
   })
 
-  Template.main.getState = function () {
-    return Session.get("state");
+  
+  Template.gameState.gameStateIs = function (game_state) {
+    return Session.get("game_state") === game_state
   }
 
   Template.main.stateIs = function (state) {
@@ -48,21 +49,22 @@ if (Meteor.isClient) {
 
   //Want flash the winner and display the vote count.
   endVoting = function() {
+      Session.set("game_state", "display_phase");
     //TODO: Use session variable here
     //TODO: Handle ties
     var winning_card = Cards.find({in_play: 1}, {sort: {votes: -1}, limit: 1})
 
     var winning_card_path = winning_card.fetch()[0].path
-    $(winning_card_path).css({'background-color': '10 px solid #967'})
+    $(winning_card_path).css({'opacity': '0.4'})
     console.log(winning_card_path)
-
+    setTimer(10, "getNextImages")
   }
 
   //Control flow for game
   //This function will get called when the timer decrements to 0, and will drive the gameplay
   getNextImages = function () {
+    Session.set("game_state", "voting_phase")
     //TODO: Build a function to set in_play
-    endVoting();
     Cards.find().forEach( function (card) {
       Cards.update( {_id: card._id}, {$set: { in_play: 0 } } );
     })
@@ -70,7 +72,7 @@ if (Meteor.isClient) {
     selectRandomCards(2).forEach(function (id) {
       Cards.update( {_id: id}, {$set: { in_play: 1, votes: 0} } );
     })
-    setTimer(8, "getNextImages")
+    setTimer(5, "endVoting")
   }
 
   selectRandomCards = function(numberOfCards) {
@@ -140,5 +142,6 @@ function runFunction(name, arguments)
 {
   switch(name) {
     case "getNextImages": getNextImages(); break;
+    case "endVoting": endVoting(); break;
   }
 }
