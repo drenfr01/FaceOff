@@ -13,6 +13,9 @@
       <tr><td id="play_for_fun" class="landing_page">Play for Fun</td><td id="statistics" class="landing_page">Statistics</td></tr>
     </table>
   {{/if}}
+  {{#if stateIs "setup"}}
+    {{> setup}}
+  {{/if}}
   {{#if stateIs "in_game"}}
     {{> gameState}}
     <table>
@@ -20,7 +23,7 @@
         {{#each displayedImages}}
           {{> displayedImage}}
         {{/each}}
-    </tr>
+      </tr>
     </table>
     <div>{{getTime}}</div>
   {{/if}}
@@ -42,5 +45,12 @@
     {{#if gameStateIs "voting_phase"}}
       <p>Please vote on your favorite picture</p>
     {{/if}}
+  </div>
+</template>
+
+<template name="setup">
+  <div>
+    How long should the voting phase be? <input type="text" id="timer">
+    <input type="button" value="Start Game" id="start">
   </div>
 </template>

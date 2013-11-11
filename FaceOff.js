@@ -1,5 +1,6 @@
 Users = new Meteor.Collection("users");
 Cards = new Meteor.Collection("cards");
+Games = new Meteor.Collection("games");
 
 //Client code
 if (Meteor.isClient) {
@@ -10,18 +11,43 @@ if (Meteor.isClient) {
   Template.main.events({
     'click #new_game' : function () {
       //Set up a new game here
-      Session.set("state", "in_game");
-      //Timer
-      // TODO: Add parametrized timer
-      setTimer(5, "endVoting");
+      Session.set("state", "setup");
+
+      // Get the most recent game
+      var most_recent_game = Games.findOne( {active: 1}, {sort: {number: -1} } );
+      //Set most recent number to 0 if this is the first game ever.
+      if(!most_recent_game) {
+        var most_recent_number = 0;
+      }
+      else {
+        var most_recent_number = most_recent_game.number;
+      }
+      Games.insert( { number: most_recent_number + 1, active: 1 } );
+      Session.set("game", most_recent_number + 1);
+    }
+  });
+
+  Template.setup.events({
+    'click #start' : function() {
+      // Grab timer value from the input box
+      var timer_value = document.getElementById("timer").value;
+
+      if(!timer_value) {
+        timer_value = 20;
+      }
+
+      var current_game = Games.findOne( {number: Session.get("game")} )
+      Games.update( { _id: current_game._id}, {$set: { voting_time: timer_value } } );
+      setTimer(timer_value, "endVoting");
       Meteor.setInterval( decrementTimer , 1000);
 
+      Session.set("state", "in_game");
       //TODO: Build a function to set in_play
       selectRandomCards(2).forEach( function (id) {
         Cards.update( {_id: id}, {$set: { in_play: 1} } )
       })
     }
-  });
+  })
 
   Template.displayedImage.events({
     'click' : function () {
@@ -30,7 +56,7 @@ if (Meteor.isClient) {
     }
   })
 
-  
+
   Template.gameState.gameStateIs = function (game_state) {
     return Session.get("game_state") === game_state
   }
@@ -49,10 +75,10 @@ if (Meteor.isClient) {
 
   //Want flash the winner and display the vote count.
   endVoting = function() {
-      Session.set("game_state", "display_phase");
-      //Show votes during the winner stage
-     console.log(document.getElementById("votes").style);
-document.getElementById("votes").style.visibility="visible";
+    Session.set("game_state", "display_phase");
+    //Show votes during the winner stage
+    console.log(document.getElementById("votes").style);
+    document.getElementById("votes").style.visibility="visible";
     //TODO: Use session variable here
     //TODO: Handle ties
     var winning_card = Cards.find({in_play: 1}, {sort: {votes: -1}, limit: 1})
@@ -60,7 +86,8 @@ document.getElementById("votes").style.visibility="visible";
     var winning_card_path = winning_card.fetch()[0].path
     $(winning_card_path).css({'opacity': '0.4'})
     console.log(winning_card_path)
-    setTimer(10, "getNextImages")
+    // Start the next round in 7 seconds
+    setTimer( 7, "getNextImages")
   }
 
   //Control flow for game
@@ -77,7 +104,7 @@ document.getElementById("votes").style.visibility="visible";
     selectRandomCards(2).forEach(function (id) {
       Cards.update( {_id: id}, {$set: { in_play: 1, votes: 0} } );
     })
-    setTimer(5, "endVoting")
+    setTimer(getVotingTime(), "endVoting")
   }
 
   selectRandomCards = function(numberOfCards) {
@@ -105,6 +132,7 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     //Set the initial State of the application
     Cards.remove({});
+    Games.remove({});
     if (Cards.find().count() == 0) {
       var image_paths = ['0001.jpg'
                         ,'0002.jpg'
@@ -149,4 +177,8 @@ function runFunction(name, arguments)
     case "getNextImages": getNextImages(); break;
     case "endVoting": endVoting(); break;
   }
+}
+
+function getVotingTime() {
+  return Games.findOne( { number: Session.get("game") } ).number;
 }

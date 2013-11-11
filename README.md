@@ -1,7 +1,7 @@
 To Do/ Features list:
  * Upload images/store images in DB
- * Implement Join a game functionality
- * Play more than one game
+ * Implement Join a game functionality -- Should be able to set Session game to the correct number and be golden
+ * ~~Play more than one game~~
  * Statistics
  * Metadata about images
  * ~~Implement visible timer~~
@@ -13,7 +13,7 @@ To Do/ Features list:
  * Investigate Less for styling
  * Add unit-test coverage
  * Ability to add time to the timer and pause button
- * Configure game parameters at newgame
+ * ~~Configure game parameters at newgame~~
  * Unable to vote during vote showing screen
  * Add player hands
  * Add card ordering
@@ -33,6 +33,7 @@ game_state: Tracks the state of the game.
 
 timer: How many seconds are left before the timer function is called.
 timer_function: The function to call when the timer hits 0.
+game: The number of the game for this session.
 
 ### Collections
 Users: Keeps track of a player
@@ -50,3 +51,4 @@ Games: Keeps track of games
  * number: Reference number to join a game
  * voting_time: How long the voting_phase lasts
  * cards(+): Tracks the cards still active
+ * active: If the game is still active
