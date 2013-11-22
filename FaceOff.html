@@ -17,11 +17,13 @@
     </table>
   {{/if}}
   {{#if stateIs "setup"}}
-    {{> setup}}
+    <div id="setupGame">
+      {{> setup}}
+    </div>
   {{/if}}
   {{#if stateIs "in_game"}}
     {{> gameState}}
-    <table>
+    <table id="gameImages">
       <tr>
         {{#each displayedImages}}
           {{> displayedImage}}
@@ -33,7 +35,7 @@
 </template>
 
 <template name="displayedImage">
-  <td id="{{path}}">
+  <td id="{{path}}" class="crop">
     <img src="{{path}}" alt="An Image">
     <!-- TODO: Only flash the votes at the conclusion of voting -->
      <div id="votes">Votes: {{votes}} </div>

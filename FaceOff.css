@@ -19,16 +19,33 @@ table {
   border: 1px solid black;
 }
 
-img {
-  height: 400px;
-  width: 600px;
-}
 
 body {
   height: 100%;
   width: 100%;
 }
 
+.crop {
+  height: 400px;
+  width: 400px;
+  overflow: hidden;
+}
+
+.crop img {
+  height: auto;
+  width: 400px;
+
+}
+
+#gameImages {
+  }
+
+#setupGame {
+  height: 100px;
+  position: absolute;
+  margin: auto; 
+  top: 0; left: 0; bottom: 0; right: 0;
+}
 
 /* Landing Page Colors */
 #new_game { background-color: #00AF64;}
