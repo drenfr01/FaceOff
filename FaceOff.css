@@ -1,10 +1,22 @@
 /* CSS declarations go here */
 
-table, tr, td {
-  text-align:left;
+.menu {
+  width: 400px;
+  height: 400px;
+  position: absolute; 
+  margin: auto; 
+  text-align: center;
+  top: 0; left: 0; bottom: 0; right: 0;
+
+}
+
+table {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  text-align:center;
   border: 1px solid black;
-  width: inherit;
-  height: 100%;
 }
 
 img {

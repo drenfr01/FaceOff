@@ -3,11 +3,14 @@
 </head>
 
 <body>
-  {{> main}}
+  <div class="menu"> 
+    {{> main}}
+  </div>
 </body>
 
 <template name="main" class="main">
   {{#if stateIs "landing"}}
+  
     <table>
       <tr><td id="new_game" class="landing_page">New game</td><td id="join_game" class="landing_page">Join A Game</td></tr>
       <tr><td id="play_for_fun" class="landing_page">Play for Fun</td><td id="statistics" class="landing_page">Statistics</td></tr>
