@@ -23,6 +23,7 @@
   {{/if}}
   {{#if stateIs "in_game"}}
     {{> gameState}}
+    <div class="group">
     <table id="gameImages">
       <tr>
         {{#each displayedImages}}
@@ -30,6 +31,7 @@
         {{/each}}
       </tr>
     </table>
+    </div>
     <div>{{getTime}}</div>
   {{/if}}
 </template>

@@ -1,7 +1,11 @@
 /* CSS declarations go here */
+/* TODO: refactor css centering to single class */
+
+/* maybe make big box in center than align things based on that? use relative positioning
+inside it? */
 
 .menu {
-  width: 400px;
+  width: 800px;
   height: 400px;
   position: absolute; 
   margin: auto; 
@@ -36,9 +40,12 @@ body {
   width: 400px;
 
 }
-
-#gameImages {
-  }
+table #gameImages {
+  height: 100px;
+  position: absolute;
+  margin: auto; 
+  top: 0; left: 0; bottom: 0; right: 0;
+}
 
 #setupGame {
   height: 100px;
@@ -56,4 +63,8 @@ body {
 .landing_page {
   width: 50%;
   height: 50%;
+}
+
+#start:hover {
+  background-color: #C0C0C0;
 }
