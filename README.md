@@ -21,6 +21,7 @@ To Do/ Features list:
  * Refactor into seperate files
  * Have all images be same size (roughly the same now, could use some work)
  * Implement socket.io chat ability to allow player communication
+ * Have enter button actually do something on "setup game" page
 
 Work in progress below this line
 ===========================================================

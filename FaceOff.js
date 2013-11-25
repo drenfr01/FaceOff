@@ -51,8 +51,8 @@ if (Meteor.isClient) {
 
   Template.displayedImage.events({
     'click' : function () {
-      Cards.update( {_id: this._id}, {$inc: { votes: 1} } )
-      console.log(this);
+        Cards.update( {_id: this._id}, {$inc: { votes: 1} } )
+        console.log(this);
     }
   })
 
@@ -180,5 +180,5 @@ function runFunction(name, arguments)
 }
 
 function getVotingTime() {
-  return Games.findOne( { number: Session.get("game") } ).number;
+  return Games.findOne( { number: Session.get("game") } ).voting_time;
 }
