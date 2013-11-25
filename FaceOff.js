@@ -39,7 +39,7 @@ if (Meteor.isClient) {
       var current_game = Games.findOne( {number: Session.get("game")} )
       Games.update( { _id: current_game._id}, {$set: { voting_time: timer_value } } );
       setTimer(timer_value, "endVoting");
-      //Meteor.setInterval( decrementTimer , 1000);
+      Meteor.setInterval( decrementTimer , 1000);
 
       Session.set("state", "in_game");
       //TODO: Build a function to set in_play
