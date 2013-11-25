@@ -19,6 +19,8 @@ To Do/ Features list:
  * Add player hands
  * Add card ordering
  * Refactor into seperate files
+ * Have all images be same size (roughly the same now, could use some work)
+ * Implement socket.io chat ability to allow player communication
 
 Work in progress below this line
 ===========================================================
