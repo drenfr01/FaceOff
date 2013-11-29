@@ -42,17 +42,19 @@ if (Meteor.isClient) {
       Meteor.setInterval( decrementTimer , 1000);
 
       Session.set("state", "in_game");
+      Session.set("game_state", "voting_phase");
       //TODO: Build a function to set in_play
       selectRandomCards(2).forEach( function (id) {
-        Cards.update( {_id: id}, {$set: { in_play: 1} } )
+        Cards.update( {_id: id}, {$set: { in_play: 1, votes: 0} } )
       })
     }
   })
 
   Template.displayedImage.events({
     'click' : function () {
-        Cards.update( {_id: this._id}, {$inc: { votes: 1} } )
-        console.log(this);
+      console.log(Session.get("game_state"))
+      if (Session.get("game_state") === "voting_phase") {
+        Cards.update( {_id: this._id}, {$inc: { votes: 1} } )};
     }
   })
 
