@@ -41,7 +41,6 @@ if (Meteor.isClient) {
       setTimer(timer_value, "endVoting");
       Meteor.setInterval( decrementTimer , 1000);
 
-
       Session.set("state", "in_game");
       getNextImages();
     }
