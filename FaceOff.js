@@ -47,6 +47,7 @@ if (Meteor.isClient) {
     }
   })
 
+  //Vote for a card
   Template.displayedImage.events({
     'click' : function () {
       //console.log(Session.get("game_state"))
