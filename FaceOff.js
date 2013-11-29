@@ -41,18 +41,15 @@ if (Meteor.isClient) {
       setTimer(timer_value, "endVoting");
       Meteor.setInterval( decrementTimer , 1000);
 
+
       Session.set("state", "in_game");
-      Session.set("game_state", "voting_phase");
-      //TODO: Build a function to set in_play
-      selectRandomCards(2).forEach( function (id) {
-        Cards.update( {_id: id}, {$set: { in_play: 1, votes: 0} } )
-      })
+      getNextImages();
     }
   })
 
   Template.displayedImage.events({
     'click' : function () {
-      console.log(Session.get("game_state"))
+      //console.log(Session.get("game_state"))
       if (Session.get("game_state") === "voting_phase") {
         Cards.update( {_id: this._id}, {$inc: { votes: 1} } )};
     }
@@ -96,13 +93,13 @@ if (Meteor.isClient) {
   //This function will get called when the timer decrements to 0, and will drive the gameplay
   getNextImages = function () {
     Session.set("game_state", "voting_phase")
-    console.log(document.getElementById("votes").style)
-    document.getElementById("votes").style.visibility="hidden";
-    //TODO: Build a function to set in_play
+
+    //Clear cards currently in play
     Cards.find().forEach( function (card) {
       Cards.update( {_id: card._id}, {$set: { in_play: 0 } } );
     })
 
+    //Put new cards into play
     selectRandomCards(2).forEach(function (id) {
       Cards.update( {_id: id}, {$set: { in_play: 1, votes: 0} } );
     })
@@ -158,15 +155,15 @@ if (Meteor.isServer) {
 }
 
 setTimer = function(time, func) {
-  console.log(time, func, Session.get("timer"));
+  //console.log(time, func, Session.get("timer"));
   Session.set("timer", time);
   Session.set("timer_function", func);
 }
 
 decrementTimer = function() {
   Session.set("timer", Session.get("timer") - 1 )
-  console.log(Session.get("timer"));
-  console.log(Session.get("timer_function"));
+  //console.log(Session.get("timer"));
+  //console.log(Session.get("timer_function"));
   if (Session.get("timer") == 0) {
     //Currently we only support running functions without arguments
     runFunction(Session.get("timer_function"));
