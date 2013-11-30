@@ -69,22 +69,23 @@ if (Meteor.isClient) {
   }
 
   Template.main.getTime = function() {
-    return Session.get("timer");
+    timer.time_dep.depend()
+    return timer.time;
   }
 
   //Want flash the winner and display the vote count.
   endVoting = function() {
     Session.set("game_state", "display_phase");
-    //Show votes during the winner stage
-    console.log(document.getElementById("votes").style);
-    document.getElementById("votes").style.visibility="visible";
+
+//-------------------------------------------------------
     //TODO: Use session variable here
     //TODO: Handle ties
     var winning_card = Cards.find({in_play: 1}, {sort: {votes: -1}, limit: 1})
-
     var winning_card_path = winning_card.fetch()[0].path
     $(winning_card_path).css({'opacity': '0.4'})
     console.log(winning_card_path)
+//-------------------------------------------------------
+
     // Start the next round in 7 seconds
     setTimer( 7, "getNextImages")
   }
@@ -147,26 +148,23 @@ if (Meteor.isServer) {
     for (var i = 0; i < image_paths.length; i++)
       Cards.insert({path: image_paths[i], active: 1, in_play: 0});
     }
-
-    //Clear certain session variables
-    // TODO: Store "session variables to reset somewhere"
-    //Session.set("timer", 0)
   });
 }
 
 setTimer = function(time, func) {
-  //console.log(time, func, Session.get("timer"));
-  Session.set("timer", time);
-  Session.set("timer_function", func);
+  timer.time = time;
+  timer.timer_function = func;
+  // Move this to the timer instantiation
+  if(!timer.time_dep)
+    timer.time_dep = new Deps.Dependency;
 }
 
 decrementTimer = function() {
-  Session.set("timer", Session.get("timer") - 1 )
-  //console.log(Session.get("timer"));
-  //console.log(Session.get("timer_function"));
-  if (Session.get("timer") == 0) {
+  timer.time = timer.time - 1;
+  timer.time_dep.changed();
+  if (timer.time == 0) {
     //Currently we only support running functions without arguments
-    runFunction(Session.get("timer_function"));
+    runFunction(timer.timer_function);
   }
 }
 
@@ -180,4 +178,10 @@ function runFunction(name, arguments)
 
 function getVotingTime() {
   return Games.findOne( { number: Session.get("game") } ).voting_time;
+}
+
+timer = {
+  time: 0,
+  timer_function: null,
+  time_dep: null
 }
