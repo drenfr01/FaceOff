@@ -1,2 +1,4 @@
 *.swp
 ignored
+public/*.jpg
+packages/
