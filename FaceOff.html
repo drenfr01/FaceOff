@@ -3,24 +3,31 @@
 </head>
 
 <body>
-  <div class="menu"> 
+  <div class="menu">
     {{> main}}
   </div>
 </body>
 
 <template name="main" class="main">
   {{#if stateIs "landing"}}
-  
     <table>
       <tr><td id="new_game" class="landing_page">New game</td><td id="join_game" class="landing_page">Join A Game</td></tr>
       <tr><td id="play_for_fun" class="landing_page">Play for Fun</td><td id="statistics" class="landing_page">Statistics</td></tr>
     </table>
   {{/if}}
+
   {{#if stateIs "setup"}}
     <div id="setupGame">
       {{> setup}}
     </div>
   {{/if}}
+
+  {{#if stateIs "joinGame"}}
+    <div id="joinGame">
+      {{> joinGame}}
+    </div>
+  {{/if}}
+
   {{#if stateIs "in_game"}}
     {{> gameState}}
     <div class="group">
@@ -59,5 +66,17 @@
   <div>
     How long should the voting phase be? <input type="text" id="timer">
     <input type="button" value="Start Game" id="start">
+  </div>
+</template>
+
+<template name="joinGame">
+  {{#each gameInPlay}}
+    {{> game}}
+  {{/each}}
+</template>
+
+<template name="game">
+  <div id="{{number}}">
+    <input type="button" value="Game id: {{number}}" class="joinGame">
   </div>
 </template>

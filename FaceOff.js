@@ -8,9 +8,10 @@ if (Meteor.isClient) {
     Session.set("state", "landing")
   })
 
+  // Option 1, create a new game
   Template.main.events({
     'click #new_game' : function () {
-      //Set up a new game here
+      //Set up a new game here:
       Session.set("state", "setup");
 
       // Get the most recent game
@@ -24,6 +25,11 @@ if (Meteor.isClient) {
       }
       Games.insert( { number: most_recent_number + 1, active: 1 } );
       Session.set("game", most_recent_number + 1);
+    },
+
+    // Option 2, join a game
+    'click #join_game' : function () {
+      Session.set("state", "joinGame");
     }
   });
 
@@ -55,6 +61,14 @@ if (Meteor.isClient) {
     }
   })
 
+  Template.game.events({
+    'click' : function () {
+      // Join the game, set the session variable for game
+      // Set the state to in play?
+      Session.set("game", this.number);
+      Console.log(Session.get("game"));
+    }
+  })
 
   Template.gameState.gameStateIs = function (game_state) {
     return Session.get("game_state") === game_state
@@ -66,6 +80,10 @@ if (Meteor.isClient) {
 
   Template.main.displayedImages = function () {
     return Cards.find( {in_play: 1} )
+  }
+
+  Template.main.gameInPlay = function () {
+    return Games.find( {active: 1} );
   }
 
   Template.main.getTime = function() {
