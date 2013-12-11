@@ -22,22 +22,28 @@ To Do/ Features list:
  * Have all images be same size (roughly the same now, could use some work)
  * Implement socket.io chat ability to allow player communication
  * Have enter button actually do something on "setup game" page
+ * Use reddit API for images
 
 Work in progress below this line
 ===========================================================
-### Session variables
-state: Tracks the state of the application.  This drives what the main template displays.
- * "landing" First hit the application
- * "in_game" Currently playing a game
- * "setup" Setting up game variables
-
+### Server variables
 game_state: Tracks the state of the game.
  * "voting_phase" Vote for which picture is better.
  * "display_phase" Show the winner of the previous round, as well as other relevant statistics.
  * "paused" To be implemented
 
-timer: How many seconds are left before the timer function is called.
-timer_function: The function to call when the timer hits 0.
+timer:
+  * time: How many seconds are left before the timer function is called.
+  * timer_function: The function to call when the timer hits 0.
+  * timer_dep: Dependency object for Meteor
+
+
+### Client Variables
+state: Tracks the state of the application.  This drives what the main template displays.
+ * "landing" First hit the application
+ * "in_game" Currently playing a game
+ * "setup" Setting up game variables
+
 game: The number of the game for this session.
 
 ### Collections

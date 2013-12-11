@@ -66,7 +66,8 @@ if (Meteor.isClient) {
       // Join the game, set the session variable for game
       // Set the state to in play?
       Session.set("game", this.number);
-      Console.log(Session.get("game"));
+      Session.set("state", "in_game");
+      console.log(Session.get("game"));
     }
   })
 
@@ -82,7 +83,7 @@ if (Meteor.isClient) {
     return Cards.find( {in_play: 1} )
   }
 
-  Template.main.gameInPlay = function () {
+  Template.joinGame.gameInPlay = function () {
     return Games.find( {active: 1} );
   }
 
@@ -199,6 +200,7 @@ function getVotingTime() {
 }
 
 timer = {
+  game: null,
   time: 0,
   timer_function: null,
   time_dep: null
