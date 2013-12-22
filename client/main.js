@@ -1,3 +1,6 @@
+Meteor.subscribe('cards');
+Meteor.subscribe('games');
+
 Meteor.startup(function () {
   Session.set("state", "landing");
 });
