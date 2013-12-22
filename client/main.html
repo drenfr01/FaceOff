@@ -1,0 +1,50 @@
+<head>
+  <title>FaceOff</title>
+</head>
+
+<body>
+  <div class="menu">
+    {{> main}}
+  </div>
+</body>
+
+<template name="main" class="main">
+  {{#if stateIs "landing"}}
+    <table>
+      <tr>
+        <td id="new_game" class="landing_page">New game</td>
+        <td id="join_game" class="landing_page">Join A Game</td>
+      </tr>
+      <tr>
+        <td id="play_for_fun" class="landing_page">Play for Fun</td>
+        <td id="statistics" class="landing_page">Statistics</td>
+      </tr>
+    </table>
+  {{/if}}
+
+  {{#if stateIs "setup"}}
+    <div id="setupGame">
+      {{> setup}}
+    </div>
+  {{/if}}
+
+  {{#if stateIs "joinGame"}}
+    <div id="joinGame">
+      {{> joinGame}}
+    </div>
+  {{/if}}
+
+  {{#if stateIs "in_game"}}
+    {{> gameState}}
+    <div class="group">
+    <table id="gameImages">
+      <tr>
+        {{#each displayedImages}}
+          {{> displayedImage}}
+        {{/each}}
+      </tr>
+    </table>
+    </div>
+    <div>{{getTime}}</div>
+  {{/if}}
+</template>

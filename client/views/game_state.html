@@ -1,0 +1,11 @@
+<template name="gameState">
+  <div id="gameState">
+    {{#if gameStateIs "display_phase"}}
+      <p>Displaying Results of Voting</p>
+    {{/if}}
+    {{#if gameStateIs "voting_phase"}}
+      <p>Please vote on your favorite picture</p>
+    {{/if}}
+  </div>
+</template>
+
