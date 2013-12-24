@@ -1,4 +1,5 @@
 Template.inGame.helpers({
-  //displayedImages : Games.find({})
+  displayedImages: Games.findOne({number: number}),
+  number: this.number
   }
 );
