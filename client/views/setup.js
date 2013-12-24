@@ -7,22 +7,15 @@ Template.setup.events({
       timer_value = 20;
     }
 
-    //TODO: initialize game function
-    //Find largest game number and insert
-    var maxGame = Games.findOne({active: 1}, {sort: {number: -1}});
-    console.log(maxGame);
-    var maxGameNumber = 0;
+    var gameAttributes = {
+      timer_value: timer_value
+    }
 
-    if(!maxGame)
-      maxGameNumber = 0;
-    else
-      maxGameNumber = maxGame.number + 1; 
-    
-    var newGameId = Games.insert({number: maxGameNumber, active:1, voting_time: timer_value});
-    setTimer(timer_value, "endVoting");
-    Meteor.setInterval( decrementTimer , 1000);
+    Meteor.call('setupGame', gameAttributes, function(error, number) {
+      if (error)
+        return alert(error.reason);
 
-    Router.go('inGame', {number: maxGameNumber});
-    getNextImages();
+      Router.go('inGame', {number: number});
+    });
   }
 });

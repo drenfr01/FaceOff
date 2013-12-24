@@ -17,4 +17,3 @@ if (Cards.find().count() === 0) {
   for (var i = 0; i < image_paths.length; i++)
     Cards.insert({path: image_paths[i], active: 1, in_play: 0});
 }
-
