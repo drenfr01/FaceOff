@@ -2,8 +2,6 @@
 Template.mainMenu.events({
   'click #new_game' : function () {
     
-    //use unique id to switch between games
-    Games.insert( { active: 1 } );
     Router.go('setup');
   },
 
@@ -47,7 +45,6 @@ endVoting = function() {
 //Control flow for game
 //This function will get called when the timer decrements to 0, and will drive the gameplay
 getNextImages = function () {
-  Session.set("game_state", "voting_phase");
 
   //Clear cards currently in play
   Cards.find().forEach( function (card) {
