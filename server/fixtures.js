@@ -15,5 +15,5 @@ if (Cards.find().count() === 0) {
                     '0000.jpg'];
   //path: relative path to file, active: still in the game, in_play: currently on the board
   for (var i = 0; i < image_paths.length; i++)
-    Cards.insert({path: image_paths[i], active: 1, in_play: 0});
+    Cards.insert({path: image_paths[i], active: [], in_play: [] });
 }

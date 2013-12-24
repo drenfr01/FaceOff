@@ -1,5 +1,4 @@
 Template.inGame.helpers({
-  displayedImages: Games.findOne({number: number}),
-  number: this.number
-  }
-);
+  number: function () { return this.number },
+  displayedImages: function () {return Cards.find({active: this.number} ) }
+});
