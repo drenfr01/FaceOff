@@ -8,4 +8,4 @@ insecure
 preserve-inputs
 npm
 iron-router
-bootstrap
+bootstrap-3
