@@ -15,7 +15,7 @@ endVoting = function(gameNumber) {
   // TODO: Update the votes to be visible
 
   // Start the next round in 7 seconds
-  setTimer(7, "getNextImages");
+  setTimer(gameNumber, 7, "getNextImages");
 };
 
 

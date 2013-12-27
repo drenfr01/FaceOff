@@ -5,17 +5,17 @@ decrementTimers = function () {
   activeTimers.forEach(function (timer) {
     Timer.update({_id: timer._id}, {$inc: {time: -1} } );
     if(timer.time === 0){
-      runFunction(timer.timerFunction)
+      runFunction(timer.timerFunction, timer.game);
     }
   })
 }
 
 //Run function, there is a much better example of how to do this in the Node JS training example
-runFunction = function (name, arguments)
+runFunction = function (name, gameNumber)
 {
   switch(name) {
-    case "getNextImages": getNextImages(); break;
-    case "endVoting": endVoting(); break;
+    case "getNextImages": getNextImages(gameNumber); break;
+    case "endVoting": endVoting(gameNumber); break;
   }
 }
 
