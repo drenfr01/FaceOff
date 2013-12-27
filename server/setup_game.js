@@ -14,7 +14,7 @@ Meteor.methods({
     var newGameId = Games.insert({
       number: maxGameNumber,
       active: 1,
-      votingTime: gameAttributes.timer_value,
+      votingTime: parseInt(gameAttributes.timer_value),
     });
 
     //This will be updated with the logic to decide which cards are in play
@@ -29,7 +29,7 @@ Meteor.methods({
     })
 
     //Initialize the timer
-    initializeTimer(maxGameNumber, gameAttributes.timer_value);
+    initializeTimer(maxGameNumber, parseInt(gameAttributes.timer_value));
 
     //Get the next images
     getNextImages(maxGameNumber)

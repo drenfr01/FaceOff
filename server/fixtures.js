@@ -1,6 +1,7 @@
 //Place data to load into server on start here
 Cards.remove({});
 Games.remove({});
+Timer.remove({});
 
 if (Cards.find().count() === 0) {
   var image_paths = ['0001.jpg',

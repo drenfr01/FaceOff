@@ -22,7 +22,7 @@ runFunction = function (name, arguments)
 setTimer = function(gameNumber, time, func) {
   var gameTimer = Timer.findOne({game: gameNumber});
 
-  Timer.update({_id: gameTimer._id}, {time: time, timerFunction: func} );
+  Timer.update({_id: gameTimer._id}, {$set : {time: time, timerFunction: func} } );
 }
 
 getVotingTime = function(gameNumber) {
@@ -30,7 +30,7 @@ getVotingTime = function(gameNumber) {
 }
 
 initializeTimer = function(gameNumber, time) {
-  Timer.insert({game: gameNumber, votingTime: time, time:-1, active: 1});
+  Timer.insert({game: gameNumber, votingTime: time, time: time, active: 1});
 }
 
 startCountDown = function() {
