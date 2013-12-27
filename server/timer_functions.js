@@ -3,7 +3,7 @@ decrementTimers = function () {
   var activeTimers = Timer.find({active: 1})
 
   activeTimers.forEach(function (timer) {
-    timer.update({_id: timer._id}, {$inc: {time: -1} } );
+    Timer.update({_id: timer._id}, {$inc: {time: -1} } );
     if(timer.time === 0){
       runFunction(timer.timerFunction)
     }
@@ -26,8 +26,6 @@ setTimer = function(gameNumber, time, func) {
 }
 
 getVotingTime = function(gameNumber) {
-  console.log(Timer.findOne({game: gameNumber}).votingTime)
-  console.log(Timer.findOne({game: gameNumber}))
   return Timer.findOne({game: gameNumber}).votingTime;
 }
 
