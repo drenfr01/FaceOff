@@ -32,7 +32,7 @@ Meteor.methods({
     initializeTimer(maxGameNumber, gameAttributes.timer_value);
 
     //Get the next images
-    getNextImages()
+    getNextImages(maxGameNumber)
 
     console.log("Completed game setup")
     return maxGameNumber;

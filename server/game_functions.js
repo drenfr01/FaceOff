@@ -8,7 +8,7 @@ getNextImages = function (gameNumber) {
   selectRandomCards(2).forEach(function (id) {
     Cards.update( {_id: id}, {$push: { in_play: gameNumber} } , {$set: {votes: 0} } );
   })
-  setTimer(getVotingTime(gameNumber), "endVoting")
+  setTimer(gameNumber, getVotingTime(gameNumber), "endVoting")
 }
 
 endVoting = function(gameNumber) {

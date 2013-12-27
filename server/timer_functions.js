@@ -26,11 +26,13 @@ setTimer = function(gameNumber, time, func) {
 }
 
 getVotingTime = function(gameNumber) {
+  console.log(Timer.findOne({game: gameNumber}).votingTime)
+  console.log(Timer.findOne({game: gameNumber}))
   return Timer.findOne({game: gameNumber}).votingTime;
 }
 
 initializeTimer = function(gameNumber, time) {
-  Timer.insert({game: gameNumber, votingTime: time, time:-1});
+  Timer.insert({game: gameNumber, votingTime: time, time:-1, active: 1});
 }
 
 startCountDown = function() {
