@@ -5,7 +5,7 @@ getNextImages = function (gameNumber) {
   });
 
   //Put new cards into play
-  selectRandomCards(2).forEach(function (id) {
+  selectRandomCards(gameNumber, 2).forEach(function (id) {
     Cards.update( {_id: id}, {$push: { in_play: gameNumber} } , {$set: {votes: 0} } );
   });
   setTimer(gameNumber, getVotingTime(gameNumber), "endVoting");
