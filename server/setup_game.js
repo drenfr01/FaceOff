@@ -31,9 +31,8 @@ Meteor.methods({
     //Initialize the timer
     initializeTimer(maxGameNumber, gameAttributes.timer_value);
 
-    Meteor.setTimeout(getNextImages(), 10000)
     //Get the next images
-    //getNextImages()
+    getNextImages()
 
     console.log("Completed game setup")
     return maxGameNumber;

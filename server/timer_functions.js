@@ -1,9 +1,13 @@
-decrementTimer = function (gameNumber) {
-  var gameTimer = Timer.findOne({game: gameNumber});
+decrementTimers = function () {
+  //Find and update all timers, this decrements each (active) timer at the same time
+  var activeTimers = Timer.find({active: 1})
 
-  Timer.update({_id: gameTimer._id}, {$inc: {time: -1} } );
-  if(gameTimer.time === 0)
-    runFunction(gameTimer.timerFunction)
+  activeTimers.forEach(function (timer) {
+    timer.update({_id: timer._id}, {$inc: {time: -1} } );
+    if(timer.time === 0){
+      runFunction(timer.timerFunction)
+    }
+  })
 }
 
 //Run function, there is a much better example of how to do this in the Node JS training example
@@ -21,11 +25,14 @@ setTimer = function(gameNumber, time, func) {
   Timer.update({_id: gameTimer._id}, {time: time, timerFunction: func} );
 }
 
-initializeTimer = function(gameNumber, time) {
-  Timer.insert({game: gameNumber, votingTime: time});
-  Meteor.setInterval( decrementTimer(gameNumber) , 1000);
-}
-
 getVotingTime = function(gameNumber) {
   return Timer.findOne({game: gameNumber}).votingTime;
+}
+
+initializeTimer = function(gameNumber, time) {
+  Timer.insert({game: gameNumber, votingTime: time, time:-1});
+}
+
+startCountDown = function() {
+  Meteor.setInterval( decrementTimers , 1000);
 }
