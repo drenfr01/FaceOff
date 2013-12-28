@@ -1,12 +1,24 @@
 <template name="mainMenu" class="mainMenu">
-  <table>
-    <tr>
-      <td id="new_game" class="landing_page">New game</td>
-      <td id="join_game" class="landing_page">Join A Game</td>
-    </tr>
-    <tr>
-      <td id="play_for_fun" class="landing_page">Play for Fun</td>
-      <td id="statistics" class="landing_page">Statistics</td>
-    </tr>
-  </table>
+  <div class="page-header">
+    <h1>FaceOff <small>A Killington App</small></h1>
+  </div>
+  <div class="col-md-4">
+    <h3>How to Play</h3>
+    <p >FaceOff is similar to a game of war. Players receive a "hand" of cards from a
+    deck, and the goal of the game is to win every card in the deck. Unlike in war, 
+    the deck is a series of images, and the winner is determined by all participants
+    voting on their favorite images. The card with the most votes wins the hand, and 
+    that player receives all the cards in that round</p> 
+    <p>The person who sets up the game controls which images are in the deck and can
+    either upload images or pull images from several different websites </p>
+  </div>
+  <div class="col-md-8 text-center">
+    <h3>Choose an Option</h3>
+    <div class="btn-group-vertical btn-group-lg">
+      <button id="new_game" class="btn btn-default">New game</button>
+      <button id="join_game" class="btn btn-default">Join A Game</button>
+      <button id="play_for_fun" class="btn btn-default">Play for Fun</button>
+      <button id="statistics" class="btn btn-default">Statistics</button>
+    </div>
+  </div>
 </template>

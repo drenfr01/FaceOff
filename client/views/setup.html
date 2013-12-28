@@ -1,6 +1,17 @@
 <template name="setup">
-  <div>
-    How long should the voting phase be? <input type="text" id="timer">
-    <input type="button" value="Start Game" id="start">
+  <div class="col-md-4">
+    <h3>Instructions</h3>
+    <p>Please fill out the options then press start game</p>
+    <p>Voting Phase = Amount of time in seconts each player has to vote </p>
+  </div>
+  <div class="col-md-8 text-center">
+    <h3>Game Options</h3>
+    <form role="form">
+      <div class="form-group">
+        <label for="timer">How long should the voting phase be?</label>
+        <input type="text" class="form-control" id="timer" placeholder="Enter Time in seconds">
+      </div>
+      <button type="submit" class="btn btn-default" id="start">Start Game</button>
+    </form>
   </div>
 </template>

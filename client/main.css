@@ -54,11 +54,12 @@ table #gameImages {
   top: 0; left: 0; bottom: 0; right: 0;
 }
 
-/* Landing Page Colors */
+/* Landing Page Colors 
 #new_game { background-color: #00AF64;}
 #join_game { background-color: #1240AB;}
 #play_for_fun { background-color: #FFAA00;}
 #statistics { background-color: #FF4900;}
+*/
 
 .landing_page {
   width: 50%;

@@ -1,9 +1,13 @@
 <template name="inGame">
-  <h1>Game Number: {{number}}</h1>
+  <div class="page-header">
+    <h1 class="text-center">Game Number: {{number}}</h1>
+  </div>
   <div>
     {{time}}
   </div>
   {{#each displayedImages}}
-    {{> displayedImage}}
+    <div class="col-md-6">
+      {{> displayedImage}}
+    </div>
   {{/each}}
 </template>
