@@ -1,6 +1,7 @@
 Template.setup.events({
-  'click #start' : function() {
+  'click #start' : function(e) {
     // Grab timer value from the input box
+    e.preventDefault();
     var timer_value = document.getElementById("timer").value;
 
     if(!timer_value) {
@@ -9,12 +10,13 @@ Template.setup.events({
 
     var gameAttributes = {
       timer_value: timer_value
-    }
+    };
 
     Meteor.call('setupGame', gameAttributes, function(error, number) {
-      if (error)
+      if (error) {
+        console.log(error.reason);
         return alert(error.reason);
-
+      }
       Router.go('inGame', {number: number});
     });
   }
