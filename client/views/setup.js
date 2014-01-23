@@ -9,7 +9,8 @@ Template.setup.events({
     }
 
     var gameAttributes = {
-      timer_value: timer_value
+      timer_value: timer_value,
+      user_id: Meteor.user()
     };
 
     Meteor.call('setupGame', gameAttributes, function(error, number) {

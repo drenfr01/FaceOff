@@ -9,3 +9,5 @@ preserve-inputs
 npm
 iron-router
 bootstrap-3
+accounts-ui
+accounts-password
