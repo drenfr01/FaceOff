@@ -35,7 +35,9 @@ Meteor.methods({
     getNextImages(maxGameNumber);
 
     //set users game to the newly created game
-    Meteor.users.update(gameAttributes.user_id, {$set: {gameNumber: maxGameNumber}});
+    //refactor this to server side function
+    //Meteor.users.update(gameAttributes.user_id, {$set: {gameNumber: maxGameNumber}});
+    setUserInGame(gameAttributes.user_id, maxGameNumber);
 
     console.log("Completed game setup");
     return maxGameNumber;
