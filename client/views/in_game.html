@@ -5,6 +5,14 @@
   <div>
     {{time}}
   </div>
+  <div>
+    <p>List of Active Users</p>
+    {{#each getUsers}}
+      {{#each emails}}
+        {{address}}
+      {{/each}}
+    {{/each}}
+  </div>
   {{#each displayedImages}}
     <div class="col-md-6">
       {{> displayedImage}}

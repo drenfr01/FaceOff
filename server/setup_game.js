@@ -19,22 +19,25 @@ Meteor.methods({
 
     //This will be updated with the logic to decide which cards are in play
     //For now this will take all the cards available
-    var cardsToInsert = Cards.find()
+    var cardsToInsert = Cards.find();
 
     cardsToInsert.forEach(function (card) {
       //The card needs to know what games it is currently a part of
-      Cards.update({_id: card._id}, {$push: {active: maxGameNumber} } )
+      Cards.update({_id: card._id}, {$push: {active: maxGameNumber} } );
       //The game needs to know what cards it has active
-      Games.update({number: maxGameNumber}, {$push: {cards: card._id} } )
-    })
+      Games.update({number: maxGameNumber}, {$push: {cards: card._id} } );
+    });
 
     //Initialize the timer
     initializeTimer(maxGameNumber, parseInt(gameAttributes.timer_value));
 
     //Get the next images
-    getNextImages(maxGameNumber)
+    getNextImages(maxGameNumber);
 
-    console.log("Completed game setup")
+    //set users game to the newly created game
+    Meteor.users.update(gameAttributes.user_id, {$set: {gameNumber: maxGameNumber}});
+
+    console.log("Completed game setup");
     return maxGameNumber;
   }
-})
+});
