@@ -6,6 +6,9 @@ getNextImages = function (gameNumber) {
 
   //Put new cards into play
   selectRandomCards(gameNumber, 2).forEach(function (id) {
+    //TODO: this assumes one game, will need to make the reset more 
+    //granular
+    Meteor.users.update({}, {$set: {hasVoted: 0}});
     Cards.update( {_id: id}, {$push: { in_play: gameNumber} } , {$set: {votes: 0} } );
   });
   setTimer(gameNumber, getVotingTime(gameNumber), "endVoting");

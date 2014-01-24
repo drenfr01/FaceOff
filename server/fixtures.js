@@ -2,6 +2,8 @@
 Cards.remove({});
 Games.remove({});
 Timer.remove({});
+//TODO: Probably want to take another look at this 
+Meteor.users.update({}, {$set: {gameNumber: -1}}, {multi: true});
 
 if (Cards.find().count() === 0) {
   var image_paths = ['0001.jpg',
@@ -16,5 +18,6 @@ if (Cards.find().count() === 0) {
                     '0000.jpg'];
   //path: relative path to file, active: still in the game, in_play: currently on the board
   for (var i = 0; i < image_paths.length; i++)
-    Cards.insert({path: image_paths[i], active: [], in_play: [] });
+    Cards.insert({path: image_paths[i], active: [], in_play: [],
+      usersVoting: [] });
 }

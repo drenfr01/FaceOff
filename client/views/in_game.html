@@ -1,21 +1,21 @@
 <template name="inGame">
   <div class="page-header">
-    <h1 class="text-center">Game Number: {{number}}</h1>
+    <h1 class="text-center">Time Remaining: {{time}}</h1>
   </div>
-  <div>
-    {{time}}
-  </div>
-  <div>
-    <p>List of Active Users</p>
-    {{#each getUsers}}
-      {{#each emails}}
-        {{address}}
+  <div class="row">
+    <div class="col-md-2">
+      <p>List of Active Users</p>
+      {{#each getUsers}}
+        {{#each emails}}
+          {{address}}
+        {{/each}}
       {{/each}}
+    </div>
+    <div class="col-md-10 text-center">
+      {{#each displayedImages}}
+        <div class="col-md-5">
+          {{> displayedImage}}
+        </div>
     {{/each}}
   </div>
-  {{#each displayedImages}}
-    <div class="col-md-6">
-      {{> displayedImage}}
-    </div>
-  {{/each}}
 </template>
