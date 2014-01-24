@@ -1,7 +1,8 @@
 getNextImages = function (gameNumber) {
   //Clear cards currently in play
   Cards.find({active: gameNumber}).forEach( function (card) {
-    Cards.update( {_id: card._id}, {$pull: { in_play: gameNumber } } );
+    Cards.update( {_id: card._id}, {$pull: { in_play: gameNumber }, 
+      $set: {usersVoting: []}});
   });
 
   //Put new cards into play
