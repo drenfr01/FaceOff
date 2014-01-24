@@ -1,7 +1,8 @@
 Template.displayedImage.helpers({
   path: function() {return this.path;},
-  votes: function() {return this.usersVoting.length;}
-
+  votes: function() {return this.usersVoting.length;},
+  //get phase from game to see if we show votes or not
+  phase: function() {}
 });
 
 Template.displayedImage.events({
