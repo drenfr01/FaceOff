@@ -18,5 +18,8 @@ Template.inGame.helpers({
   },
   hasVoted: function() {
     return Meteor.user().hasVoted === 1;
+  },
+  votingPhase: function() {
+    return this.phase === "Voting";
   }
 });
