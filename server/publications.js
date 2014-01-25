@@ -14,5 +14,5 @@ Meteor.publish('timer', function() {
 
 Meteor.publish("userData", function() {
   return Meteor.users.find({_id: this.userId},
-    {fields: {'gameNumber': 1}});
+    {fields: {'gameNumber': 1, 'hasVoted': 1}});
 });

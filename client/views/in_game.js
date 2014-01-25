@@ -15,5 +15,8 @@ Template.inGame.helpers({
       });
     console.log(Session.get('usersInGame'));
     return Session.get('usersInGame');
+  },
+  hasVoted: function() {
+    return Meteor.user().hasVoted === 1;
   }
 });

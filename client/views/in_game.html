@@ -1,7 +1,12 @@
 <template name="inGame">
-  <div class="page-header">
-    <h1 class="text-center">{{phase}} Phase</h1>
-    <h1 class="text-center">Time Remaining: {{time}}</h1>
+  <div class="page-header text-center">
+    <h1>{{phase}} Phase</h1>
+    <h1>Time Remaining: {{time}}</h1>
+    {{#if hasVoted}}
+      <h3 class="alert alert-success">Thank you for Voting</h3>
+    {{else}}
+      <h3 class="alert alert-warning">>Please vote!</h3>
+    {{/if}}
   </div>
   <div class="row">
     <div class="col-md-2">
