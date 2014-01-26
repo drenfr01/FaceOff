@@ -1,6 +1,5 @@
 Meteor.methods({
   setupGame: function(gameAttributes) {
-    console.log("Setting up the game");
 
     //Find largest game number and insert
     var maxGame = Games.findOne({active: 1}, {sort: {number: -1}});
@@ -20,14 +19,25 @@ Meteor.methods({
 
     //This will be updated with the logic to decide which cards are in play
     //For now this will take all the cards available
-    var cardsToInsert = Cards.find();
-
-    cardsToInsert.forEach(function (card) {
-      //The card needs to know what games it is currently a part of
+    if(gameAttributes.source === "default") {
+      Cards.find().forEach(function (card) {
       Cards.update({_id: card._id}, {$push: {active: maxGameNumber} } );
-      //The game needs to know what cards it has active
       Games.update({number: maxGameNumber}, {$push: {cards: card._id} } );
-    });
+      });
+    } else {
+      cardsToInsert = callExternalAPI(gameAttributes.source);
+      cardsToInsert.forEach(function (data) {
+        //check to make sure we are given image link
+        if(data.data.url.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
+          console.log(data.data.url);
+          card = Cards.insert({path: data.data.url,in_play: [],
+            usersVoting : [], active: maxGameNumber});
+          Games.update({number: maxGameNumber}, 
+            {$push: {cards: card._id_}});
+        }
+      });
+    }
+
 
     //Initialize the timer
     initializeTimer(maxGameNumber, parseInt(gameAttributes.timer_value));
@@ -37,7 +47,17 @@ Meteor.methods({
 
     setUserInGame(gameAttributes.user_id, maxGameNumber);
 
-    console.log("Completed game setup");
     return maxGameNumber;
   }
 });
+
+callExternalAPI = function(source) {
+  try {
+    var result = HTTP.call("GET", "http://www.reddit.com/r/pictures/top.json?sort=top.json&t=all&limit=10"); 
+    return result.data.data.children;
+  } catch (e) {
+    //TODO: make this a proper meteor error
+    console.log(e);
+    return false;
+  }
+};

@@ -34,12 +34,12 @@ body {
   width: 400px;
   overflow: hidden;
 }
-
 .crop img {
   height: auto;
   width: 400px;
 
 }
+
 table #gameImages {
   height: 100px;
   position: absolute;

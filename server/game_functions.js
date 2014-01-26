@@ -30,7 +30,7 @@ endVoting = function(gameNumber) {
   // TODO: Update the votes to be visible
   Games.update({number: gameNumber}, {$set: {phase: "Display"}});
   // Start the next round in 7 seconds
-  setTimer(gameNumber, 7, "getNextImages");
+  setTimer(gameNumber, 3, "getNextImages");
 };
 
 

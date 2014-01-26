@@ -1,3 +1,4 @@
+note: http://www.reddit.com/r/science/top?sort=top&t=all&limit=10
 To Do/ Features list:
  * Upload images/store images in DB
  * Implement Join a game functionality -- Should be able to set Session game to the correct number and be golden
