@@ -28,4 +28,10 @@
         </div>
     {{/each}}
   </div>
+  <div class="row text-center">
+    {{#if pauseGame}}
+      <input type="button" value="Resume" id="resumeButton" class="btn btn-primary btn-lg btn-success">
+    {{else}}
+      <input type="button" value="Pause" id="pauseButton" class="btn btn-primary btn-lg btn-info">
+    {{/if}}
 </template>

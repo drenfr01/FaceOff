@@ -15,6 +15,7 @@ Meteor.methods({
       number: maxGameNumber,
       active: 1,
       votingTime: parseInt(gameAttributes.timer_value),
+      isPaused: false
     });
 
     //This will be updated with the logic to decide which cards are in play

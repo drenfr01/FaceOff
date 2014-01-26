@@ -36,3 +36,11 @@ initializeTimer = function(gameNumber, time) {
 startCountDown = function() {
   Meteor.setInterval( decrementTimers , 1000);
 };
+
+pauseTimer = function(gameNumber) {
+  Timer.update({game: gameNumber}, {$set: {active: 0}});
+};
+
+resumeTimer = function(gameNumber) {
+  Timer.update({game: gameNumber}, {$set: {active: 1}});
+};

@@ -1,3 +1,13 @@
+Meteor.methods({
+  pauseGame: function(gameNumber) {
+    pauseTimer(gameNumber);
+    Games.update({number: gameNumber}, {$set: {isPaused: true}});
+  },
+  resumeGame: function(gameNumber) {
+    resumeTimer(gameNumber);
+    Games.update({number: gameNumber}, {$set: {isPaused: false}});
+  }
+});
 getNextImages = function (gameNumber) {
   //Clear cards currently in play
   Games.update({number: gameNumber}, {$set: {phase: "Voting"}});

@@ -13,7 +13,6 @@ Template.inGame.helpers({
     //      data[this.number] = users;
           Session.set('usersInGame', users);
       });
-    console.log(Session.get('usersInGame'));
     return Session.get('usersInGame');
   },
   hasVoted: function() {
@@ -21,5 +20,29 @@ Template.inGame.helpers({
   },
   votingPhase: function() {
     return this.phase === "Voting";
+  },
+  pauseGame: function() {
+    return this.isPaused;
+  }      
+});
+
+Template.inGame.events({
+  'click #pauseButton': function(e) {
+    e.preventDefault();
+    Meteor.call('pauseGame', this.number, 
+      function(error, result) {
+        if(error) {
+          alert(error.reason);
+        }
+      });
+    },
+  'click #resumeButton': function(e) {
+    e.preventDefault();
+    Meteor.call('resumeGame', this.number, 
+      function(error, result) {
+        if(error) {
+          alert(error.reason);
+        }
+      });
   }
 });
