@@ -29,9 +29,10 @@ Meteor.methods({
       cardsToInsert.forEach(function (data) {
         //check to make sure we are given image link
         if(data.data.url.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
-          console.log(data.data.url);
+
           card = Cards.insert({path: data.data.url,in_play: [],
             usersVoting : [], active: maxGameNumber});
+          
           Games.update({number: maxGameNumber}, 
             {$push: {cards: card._id_}});
         }

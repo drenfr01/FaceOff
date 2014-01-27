@@ -35,5 +35,14 @@ Template.setup.events({
             alert(error.reason);
           }
         });
+  },
+  'change #test': function(e) {
+    Session.set("source",$("#test").val());
+  }
+});
+
+Template.setup.helpers({
+  isNotDefault: function() {
+    return Session.get("source") !== "Default"; 
   }
 });
