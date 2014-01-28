@@ -19,13 +19,13 @@ Meteor.methods({
 
     //This will be updated with the logic to decide which cards are in play
     //For now this will take all the cards available
-    if(gameAttributes.source === "default") {
+    if(gameAttributes.cardsUrl === "default") {
       Cards.find().forEach(function (card) {
       Cards.update({_id: card._id}, {$push: {active: maxGameNumber} } );
       Games.update({number: maxGameNumber}, {$push: {cards: card._id} } );
       });
     } else {
-      cardsToInsert = callExternalAPI(gameAttributes.source);
+      cardsToInsert = callExternalAPI(gameAttributes.cardsUrl);
       cardsToInsert.forEach(function (data) {
         //check to make sure we are given image link
         if(data.data.url.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
@@ -54,7 +54,7 @@ Meteor.methods({
 
 callExternalAPI = function(source) {
   try {
-    var result = HTTP.call("GET", "http://www.reddit.com/r/pictures/top.json?sort=top.json&t=all&limit=10"); 
+    var result = HTTP.call("GET", source); 
     return result.data.data.children;
   } catch (e) {
     //TODO: make this a proper meteor error
