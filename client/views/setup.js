@@ -1,13 +1,9 @@
 Template.setup.events({
   'click #start' : function(e) {
-    // Grab timer value from the input box
     e.preventDefault();
 
-    //Check then set voting phase length
-   
+    //Set voting phase length
     var timerValue = $("#timer").val();
-    if( ! $.isNumeric( timerValue ) ) {
-    }
 
     cardSource = Session.get("source");
 
@@ -19,22 +15,20 @@ Template.setup.events({
     } else if ( cardSource  === "boxers") {
         baseUrl = "http://www.reddit.com/r/boxers/"; 
     } else if ( cardSource === "other" ) {
-      baseUrl = $("#url").val();
+      baseUrl = "http://www.reddit.com/r/" + $("#customUrl").val() + "/";
     } else { 
       baseUrl = "error";
     }
 
-    //Build full json call
     //TODO: current defaults sorting to top
     //ttp://www.reddit.com/r/science/top?sort=top&t=all&limit=10
-    if ( cardSource !== "Default" ) {
+    if ( cardSource !== "--" ) {
       urlParams = {
         t : $("#time_range").val(),
         limit : $("#limit").val()
       };
       fullUrl = baseUrl + $("#category").val() + ".json?" +
         $.param(urlParams);
-      console.log(fullUrl);
         
     }
 
@@ -46,7 +40,7 @@ Template.setup.events({
 
     Meteor.call('setupGame', gameAttributes, function(error, number) {
       if (error) {
-        throwError("Login must be numeric");
+        throwError(error.reason);
         Router.go('setup');
       }
       Router.go('inGame', {number: number});
@@ -69,6 +63,9 @@ Template.setup.events({
 
 Template.setup.helpers({
   isNotDefault: function() {
-    return Session.get("source") !== "Default"; 
-  }
+    return Session.get("source") !== "--"; 
+  },
+  isOther: function() {
+    return Session.get("source") === "other";
+   }
 });

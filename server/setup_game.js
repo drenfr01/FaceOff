@@ -1,11 +1,12 @@
 Meteor.methods({
   setupGame: function(gameAttributes) {
 
+
     //Ensure timer is numeric value
-    if (! _isNumber(gameAttributes.timer_value) ) {
+    var timerValue = parseInt(gameAttributes.timer_value);
+    if (! _.isNumber( timerValue ) || isNaN( timerValue ) ) {
       throw new Meteor.Error(302, "Must have numeric value for timer");
     }
-    
     //Find largest game number and insert
     var maxGame = Games.findOne({active: 1}, {sort: {number: -1}});
     var maxGameNumber = 0;
@@ -18,7 +19,7 @@ Meteor.methods({
     var newGameId = Games.insert({
       number: maxGameNumber,
       active: 1,
-      votingTime: parseInt(gameAttributes.timer_value),
+      votingTime: timerValue,
       isPaused: false
     });
 
@@ -62,8 +63,7 @@ callExternalAPI = function(source) {
     var result = HTTP.call("GET", source); 
     return result.data.data.children;
   } catch (e) {
-    //TODO: make this a proper meteor error
-    console.log(e);
-    return false;
+    //TODO: not throwing proper message
+    throw new Meteor.Error(302, "Invalid Subreddit - Try again");
   }
 };

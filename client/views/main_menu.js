@@ -1,7 +1,7 @@
 // Option 1, create a new game
 Template.mainMenu.events({
   'click #new_game' : function () {
-    Session.set("source","Default");
+    Session.set("source","--");
     
     Router.go('setup');
   },

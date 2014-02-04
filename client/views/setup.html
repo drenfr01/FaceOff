@@ -17,6 +17,7 @@
       <div class="row">
         <div class="col-xs-4">
           <select class="form-control" id="test">
+            <option>--</option>
             <option>Upload</option>
             <option>natureporn</option>
             <option>boxers</option>
@@ -24,8 +25,15 @@
           </select>
           <span class="help-block">Select source of cards</span>
         </div>
-      </div>
-      {{#if isNotDefault}}
+       {{#if isOther}}
+          <div class="col-xs-4">
+            <input type="text" class="form-control" id="customUrl" placeholder="Enter subreddit name">
+            <span class="help-block">Example: "Jokes" or "News"</span>
+          </div>
+        {{/if}}
+       </div>
+       <!--TODO: change this to only appear after other url filled in -->
+        {{#if isNotDefault}}
         <div class="row">
           <div class="col-xs-4">
             <select class="form-control" id="category">
