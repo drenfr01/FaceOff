@@ -6,6 +6,7 @@ Template.setup.events({
     var timerValue = $("#timer").val();
 
     cardSource = Session.get("source");
+    
 
     //Set website base URL call
     if( cardSource  === "upload" ) {
@@ -15,6 +16,7 @@ Template.setup.events({
     } else if ( cardSource  === "boxers") {
         baseUrl = "http://www.reddit.com/r/boxers/"; 
     } else if ( cardSource === "other" ) {
+      Session.set("urlEntered",false);
       baseUrl = "http://www.reddit.com/r/" + $("#customUrl").val() + "/";
     } else { 
       baseUrl = "error";
@@ -60,10 +62,16 @@ Template.setup.events({
     Session.set("source",$("#test").val());
   }
 });
+Template.setup.created = function (){
+    //Session variable to control when more options appear when
+    //using "other" option
+    console.log("rendering");
+    Session.set("urlEntered", true);
+};
 
 Template.setup.helpers({
   isNotDefault: function() {
-    return Session.get("source") !== "--"; 
+    return Session.get("source") !== "--" && Session.get("urlEntered"); 
   },
   isOther: function() {
     return Session.get("source") === "other";
