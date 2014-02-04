@@ -1,6 +1,11 @@
 Meteor.methods({
   setupGame: function(gameAttributes) {
 
+    //Ensure timer is numeric value
+    if (! _isNumber(gameAttributes.timer_value) ) {
+      throw new Meteor.Error(302, "Must have numeric value for timer");
+    }
+    
     //Find largest game number and insert
     var maxGame = Games.findOne({active: 1}, {sort: {number: -1}});
     var maxGameNumber = 0;

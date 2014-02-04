@@ -3,25 +3,26 @@ Template.setup.events({
     // Grab timer value from the input box
     e.preventDefault();
 
-    //Set voting phase length
-    var timer_value = document.getElementById("timer").value;
-
-    if(!timer_value) {
-      timer_value = 20;
+    //Check then set voting phase length
+   
+    var timerValue = $("#timer").val();
+    if( ! $.isNumeric( timerValue ) ) {
     }
 
     cardSource = Session.get("source");
 
     //Set website base URL call
-    if( cardSource  === "Default" ) {
+    if( cardSource  === "upload" ) {
         baseUrl = ".";
     } else if ( cardSource  === "natureporn" ) {
         baseUrl = "http://www.reddit.com/r/natureporn/";
     } else if ( cardSource  === "boxers") {
         baseUrl = "http://www.reddit.com/r/boxers/"; 
-      } else {
-        baseUrl = "error";
-      }
+    } else if ( cardSource === "other" ) {
+      baseUrl = $("#url").val();
+    } else { 
+      baseUrl = "error";
+    }
 
     //Build full json call
     //TODO: current defaults sorting to top
@@ -38,14 +39,15 @@ Template.setup.events({
     }
 
     var gameAttributes = {
-      timer_value: timer_value,
+      timer_value: timerValue,
       user_id: Meteor.user(),
       cardsUrl: fullUrl
     };
 
     Meteor.call('setupGame', gameAttributes, function(error, number) {
       if (error) {
-        alert(error.reason);
+        throwError("Login must be numeric");
+        Router.go('setup');
       }
       Router.go('inGame', {number: number});
     });
