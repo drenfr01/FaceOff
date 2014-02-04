@@ -22,8 +22,6 @@ Template.setup.events({
       baseUrl = "error";
     }
 
-    //TODO: current defaults sorting to top
-    //ttp://www.reddit.com/r/science/top?sort=top&t=all&limit=10
     if ( cardSource !== "--" ) {
       urlParams = {
         t : $("#time_range").val(),
@@ -31,7 +29,7 @@ Template.setup.events({
       };
       fullUrl = baseUrl + $("#category").val() + ".json?" +
         $.param(urlParams);
-        
+       console.log("URL entered: " + fullUrl); 
     }
 
     var gameAttributes = {
@@ -48,6 +46,7 @@ Template.setup.events({
       Router.go('inGame', {number: number});
     });
   }, 
+  //TODO: This is dead code right now
   'click #checkAPI' : function(e) {
     e.preventDefault();
     apiAttributes = {};
@@ -65,7 +64,6 @@ Template.setup.events({
 Template.setup.created = function (){
     //Session variable to control when more options appear when
     //using "other" option
-    console.log("rendering");
     Session.set("urlEntered", true);
 };
 

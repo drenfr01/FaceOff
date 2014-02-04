@@ -8,7 +8,7 @@ Template.inGame.helpers({
     Meteor.call('getUsersInGame', this.number, 
       function(error, users) {
           if(error) {
-            return alert(error.reason);
+            throwError(error.reason);
           }
     //      data[this.number] = users;
           Session.set('usersInGame', users);
@@ -32,7 +32,7 @@ Template.inGame.events({
     Meteor.call('pauseGame', this.number, 
       function(error, result) {
         if(error) {
-          alert(error.reason);
+          throwError(error.reason);
         }
       });
     },
@@ -41,7 +41,7 @@ Template.inGame.events({
     Meteor.call('resumeGame', this.number, 
       function(error, result) {
         if(error) {
-          alert(error.reason);
+          throwError(error.reason);
         }
       });
   }

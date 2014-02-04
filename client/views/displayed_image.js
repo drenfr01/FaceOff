@@ -16,7 +16,9 @@ Template.displayedImage.events({
     Meteor.call('voteForImage', Meteor.userId(), this._id, 
       function(error, response) {
         if(error)
-          alert(error.reason);
+          throwError(error.reason);
+          //TODO: this appeared to solve a bug where you could vote twice. No idea how...
+          return false;
       });
   }
 });
