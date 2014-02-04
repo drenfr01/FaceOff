@@ -16,14 +16,14 @@
       </div>
       <div class="row">
         <div class="col-xs-4">
-          <select class="form-control" id="test">
+          <select class="form-control" id="urlChoice">
             <option>--</option>
             <option>Upload</option>
             <option>natureporn</option>
             <option>boxers</option>
             <option>other</option>
           </select>
-          <span class="help-block">Select source of cards</span>
+          <span class="help-block">Sub-Reddit</span>
         </div>
        {{#if isOther}}
           <div class="col-xs-4">
@@ -43,7 +43,7 @@
               <option>top</option>
               <option>gilded</option>
             </select>
-            <span class="help-block">Select Reddit category</span>
+            <span class="help-block">Reddit Category</span>
           </div>
           <div class="col-xs-4">
             <input type="number" class="form-control" id="limit" placeholder="Enter number of cards">
@@ -57,7 +57,7 @@
               <option>day</option>
               <option>hour</option>
             </select>
-            <span class="help-block">Select time range</span>
+            <span class="help-block">Time Range</span>
           </div>
         </div>
       {{/if}}

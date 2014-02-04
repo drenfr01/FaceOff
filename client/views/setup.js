@@ -16,7 +16,6 @@ Template.setup.events({
     } else if ( cardSource  === "boxers") {
         baseUrl = "http://www.reddit.com/r/boxers/"; 
     } else if ( cardSource === "other" ) {
-      Session.set("urlEntered",false);
       baseUrl = "http://www.reddit.com/r/" + $("#customUrl").val() + "/";
     } else { 
       baseUrl = "error";
@@ -57,8 +56,15 @@ Template.setup.events({
           }
         });
   },
-  'change #test': function(e) {
-    Session.set("source",$("#test").val());
+  'change #urlChoice': function(e) {
+    urlOption = $("#urlChoice").val();
+    if(urlOption == "other") {
+      Session.set("urlEntered",false);
+    }
+    Session.set("source", urlOption);
+  },
+  'change #customUrl': function(e) {
+    Session.set("urlEntered", true);
   }
 });
 Template.setup.created = function (){
