@@ -1,5 +1,5 @@
 Template.setup.events({
-  'click #start' : function(e) {
+  'click #joinLobby' : function(e) {
     e.preventDefault();
 
     //Set voting phase length
@@ -42,7 +42,7 @@ Template.setup.events({
         throwError(error.reason);
         Router.go('setup');
       }
-      Router.go('inGame', {number: number});
+      Router.go('lobby', {number: number});
     });
   }, 
   //TODO: This is dead code right now
