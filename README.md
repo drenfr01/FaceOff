@@ -64,3 +64,18 @@ Games: Keeps track of games
  * voting_time: How long the voting_phase lasts
  * cards(+): Tracks the cards still active
  * active: If the game is still active
+
+
+### NOTES: 2/4/14
+    // ~~A user will know about their cards~~
+    // ~~A user will push and pop cards off their array~~
+
+    // A game is going to know two "atBat" users
+    // Find cards will take in two users and select the top card from each
+    // The end of the voting phase will select two new "at_bat" users
+
+    // Winning.....
+    // Eliminating users
+
+    // Cards will still know their game and will be in play, and active in games
+    // Cards will still be displayed based on their in_play values

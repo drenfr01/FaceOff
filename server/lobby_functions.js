@@ -1,14 +1,28 @@
 Meteor.methods({
   assignCards: function(attributes) {
     // Attributes needs to pass a game number, we can get users and cards from that info
-    gameNumber = attributes.number
-    // A user will know about their cards
-    // Find cards will take in two users and select a random card from each
-    // Cards will still know their game and will be in play, and active in games
-    // Cards will still be displayed based on their in_play values
+    gameNumber = attributes.number;
 
+    users = Meteor.users.find({gameNumber: gameNumber}).fetch();
 
+    cards = Cards.find( { active: gameNumber } );
 
-    //split number of cards assigned to this game to each users
+    userCount = users.length;
+    // Keep popping cards off the array looping around the users
+    cards.forEach( function (card) {
+      userCount --
+      currentUserId = users[userCount]._id
+      // TODO: We should call addCardToUser here I think
+      Users.update( { _id: currentUserId }, { $push: { cards: cards._id } } )
+      if(currentUserId === 0) {
+        userCount = users.length;
+      }
+    });
+
+    //Initialize the timer
+    initializeTimer(maxGameNumber, parseInt(gameAttributes.timer_value));
+
+    //Get the next images
+    getNextImages(maxGameNumber);
   }
 });

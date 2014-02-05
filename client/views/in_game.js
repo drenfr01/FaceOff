@@ -2,10 +2,10 @@ Template.inGame.helpers({
   number: function () { return this.number; },
   displayedImages: function () {return Cards.find({active: this.number, in_play: this.number} ); },
   time: function() { return Timer.findOne({game: this.number}).time; },
-  getUsers: function() { 
+  getUsers: function() {
     //This prevents an undefined error while server updates first time
     Session.setDefault('usersInGame',[{emails: [{address: []}]}]);
-    Meteor.call('getUsersInGame', this.number, 
+    Meteor.call('getUsersInGame', this.number,
       function(error, users) {
           if(error) {
             throwError(error.reason);
@@ -23,13 +23,13 @@ Template.inGame.helpers({
   },
   pauseGame: function() {
     return this.isPaused;
-  }      
+  }
 });
 
 Template.inGame.events({
   'click #pauseButton': function(e) {
     e.preventDefault();
-    Meteor.call('pauseGame', this.number, 
+    Meteor.call('pauseGame', this.number,
       function(error, result) {
         if(error) {
           throwError(error.reason);
@@ -38,7 +38,7 @@ Template.inGame.events({
     },
   'click #resumeButton': function(e) {
     e.preventDefault();
-    Meteor.call('resumeGame', this.number, 
+    Meteor.call('resumeGame', this.number,
       function(error, result) {
         if(error) {
           throwError(error.reason);

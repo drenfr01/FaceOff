@@ -45,13 +45,6 @@ Meteor.methods({
       });
     }
 
-
-    //Initialize the timer
-    initializeTimer(maxGameNumber, parseInt(gameAttributes.timer_value));
-
-    //Get the next images
-    getNextImages(maxGameNumber);
-
     setUserInGame(gameAttributes.user_id, maxGameNumber);
 
     return maxGameNumber;

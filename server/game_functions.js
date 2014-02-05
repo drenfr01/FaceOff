@@ -8,9 +8,13 @@ Meteor.methods({
     Games.update({number: gameNumber}, {$set: {isPaused: false}});
   }
 });
+
 getNextImages = function (gameNumber) {
-  //Clear cards currently in play
-  Games.update({number: gameNumber}, {$set: {phase: "Voting"}});
+  //Push users from at_bat back onto the queue of users
+  Games.update({ number: gameNumber }, { $set: { phase: "Voting", atBat: [] } });
+
+  users = setAtBatUsers(gameNumber);
+
   Cards.find({active: gameNumber}).forEach( function (card) {
     Cards.update( {_id: card._id}, {$pull: { in_play: gameNumber }, 
       $set: {usersVoting: []}});
@@ -18,7 +22,7 @@ getNextImages = function (gameNumber) {
 
   //Put new cards into play
   selectRandomCards(gameNumber, 2).forEach(function (id) {
-    //TODO: this assumes one game, will need to make the reset more 
+    //TODO: this assumes one game, will need to make the reset more
     //granular
     Meteor.users.update({}, {$set: {hasVoted: 0}}, {multi: true});
     Cards.update( {_id: id}, {$push: { in_play: gameNumber} } , {$set: {votes: 0} } );
@@ -52,3 +56,7 @@ selectRandomCards = function(gameNumber, numberOfCards) {
 
   return [card1, card2];
 };
+
+setAtBatUsers = function(gameNumber) {
+  users = Games.find()
+}

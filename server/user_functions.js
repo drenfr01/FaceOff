@@ -1,6 +1,6 @@
 Meteor.methods({
   getUsersInGame: function(gameId) {
-  return Meteor.users.find({gameNumber: gameId}).fetch();
+    return Meteor.users.find({gameNumber: gameId}).fetch();
   },
   joinUserToGame: function(userId, gameNumber) {
     setUserInGame(userId, gameNumber);
