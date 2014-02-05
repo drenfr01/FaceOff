@@ -6,7 +6,7 @@ Template.setup.events({
     var timerValue = $("#timer").val();
 
     cardSource = Session.get("source");
-    
+
 
     //Set website base URL call
     if( cardSource  === "upload" ) {
@@ -14,10 +14,10 @@ Template.setup.events({
     } else if ( cardSource  === "natureporn" ) {
         baseUrl = "http://www.reddit.com/r/natureporn/";
     } else if ( cardSource  === "boxers") {
-        baseUrl = "http://www.reddit.com/r/boxers/"; 
+        baseUrl = "http://www.reddit.com/r/boxers/";
     } else if ( cardSource === "other" ) {
       baseUrl = "http://www.reddit.com/r/" + $("#customUrl").val() + "/";
-    } else { 
+    } else {
       baseUrl = "error";
     }
 
@@ -28,7 +28,7 @@ Template.setup.events({
       };
       fullUrl = baseUrl + $("#category").val() + ".json?" +
         $.param(urlParams);
-       console.log("URL entered: " + fullUrl); 
+       console.log("URL entered: " + fullUrl);
     }
 
     var gameAttributes = {
@@ -44,12 +44,12 @@ Template.setup.events({
       }
       Router.go('lobby', {number: number});
     });
-  }, 
+  },
   //TODO: This is dead code right now
   'click #checkAPI' : function(e) {
     e.preventDefault();
     apiAttributes = {};
-    Meteor.call('getImagesFromAPI', apiAttributes, 
+    Meteor.call('getImagesFromAPI', apiAttributes,
         function(error, number) {
           if(error) {
             alert(error.reason);
@@ -75,7 +75,7 @@ Template.setup.created = function (){
 
 Template.setup.helpers({
   isNotDefault: function() {
-    return Session.get("source") !== "--" && Session.get("urlEntered"); 
+    return Session.get("source") !== "--" && Session.get("urlEntered");
   },
   isOther: function() {
     return Session.get("source") === "other";
