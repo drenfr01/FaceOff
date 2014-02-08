@@ -8,21 +8,23 @@ Meteor.methods({
     cards = Cards.find( { active: gameNumber } );
 
     userCount = users.length;
+    console.log('users')
+    console.log(users)
     // Keep popping cards off the array looping around the users
     cards.forEach( function (card) {
       userCount --
       currentUserId = users[userCount]._id
+
       // TODO: We should call addCardToUser here I think
-      Users.update( { _id: currentUserId }, { $push: { cards: cards._id } } )
-      if(currentUserId === 0) {
+      Meteor.users.update( { _id: currentUserId }, { $push: { cards: cards._id } } )
+      if(userCount == 0) {
         userCount = users.length;
       }
     });
 
-    //Initialize the timer
-    initializeTimer(maxGameNumber, parseInt(gameAttributes.timer_value));
-
     //Get the next images
-    getNextImages(maxGameNumber);
+    getNextImages(gameNumber);
+
+    return gameNumber;
   }
 });

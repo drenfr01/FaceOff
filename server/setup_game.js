@@ -45,6 +45,9 @@ Meteor.methods({
       });
     }
 
+    //Initialize the timer
+    initializeTimer(maxGameNumber, parseInt(gameAttributes.timer_value));
+
     setUserInGame(gameAttributes.user_id, maxGameNumber);
 
     return maxGameNumber;

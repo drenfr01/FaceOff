@@ -11,7 +11,9 @@ Meteor.methods({
 
 getNextImages = function (gameNumber) {
   //Push users from at_bat back onto the queue of users
+  lastTurnsUsers = Games.findOne( {number: gameNumber} ).atBat
   Games.update({ number: gameNumber }, { $set: { phase: "Voting", atBat: [] } });
+//Games.update({ number: gameNumber }, { $set: { phase: "Voting", atBat: [] }. $push { users : lastTurnsUsers } });
 
   users = setAtBatUsers(gameNumber);
 

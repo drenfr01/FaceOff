@@ -3,7 +3,7 @@ Cards.remove({});
 Games.remove({});
 Timer.remove({});
 //TODO: Probably want to take another look at this 
-Meteor.users.update({}, {$set: {gameNumber: -1}}, {multi: true});
+Meteor.users.update({}, {$set: {gameNumber: -1, cards: []}}, {multi: true});
 
 if (Cards.find().count() === 0) {
   var image_paths = ['0001.jpg',
