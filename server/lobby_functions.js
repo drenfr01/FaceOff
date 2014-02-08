@@ -8,8 +8,6 @@ Meteor.methods({
     cards = Cards.find( { active: gameNumber } );
 
     userCount = users.length;
-    console.log('users')
-    console.log(users)
     // Keep popping cards off the array looping around the users
     cards.forEach( function (card) {
       userCount --

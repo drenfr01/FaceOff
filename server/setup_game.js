@@ -38,8 +38,8 @@ Meteor.methods({
 
           card = Cards.insert({path: data.data.url,in_play: [],
             usersVoting : [], active: maxGameNumber});
-          
-          Games.update({number: maxGameNumber}, 
+
+          Games.update({number: maxGameNumber},
             {$push: {cards: card._id_}});
         }
       });
@@ -51,12 +51,18 @@ Meteor.methods({
     setUserInGame(gameAttributes.user_id, maxGameNumber);
 
     return maxGameNumber;
+  },
+  removeCard: function(cardId) {
+    //TODO: sketchy, does not support multiple games
+    gameNumber = Cards.findOne({_id: cardId}).active;
+    Games.update({number: gameNumber}, {$pull: {cards: cardId}});
+    Cards.update({_id: cardId}, {$set: {active: -1}});
   }
 });
 
 callExternalAPI = function(source) {
   try {
-    var result = HTTP.call("GET", source); 
+    var result = HTTP.call("GET", source);
     return result.data.data.children;
   } catch (e) {
     //TODO: not throwing proper message
