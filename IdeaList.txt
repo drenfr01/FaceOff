@@ -1,0 +1,5 @@
+Have game of elimination (remove losing card each round, last player left wins)
+Jump right into pre-selected game
+Have drafting round
+Have ability to have 2 decks of cards 
+
