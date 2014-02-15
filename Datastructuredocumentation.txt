@@ -1,0 +1,62 @@
+﻿Note: CRUD procedures -> each database call in separate method (put in separate js file on server called database access)
+
+
+Broadcast start game through game collection?
+
+
+Global Concepts
+
+
+Image (global card)
+ - image
+ - statistics
+
+
+
+
+User (Meteor default)
+  - login info (email)
+  -   statistics
+
+
+“Game Concepts”
+
+
+Game
+ - Players
+   - Deck
+     - Card
+
+
+
+
+Game 
+  - game Attributes (hash of things like timer value, etc.)
+  - players
+  - cards in play (2 id’s of cards currently in play)
+  - phases (lobby, voting, display, end?)
+  - paused flag?
+  - game ended flag
+
+
+Player
+  - Deck (an array that contains cards)
+  - game id
+  - user id
+  - host/admin/special status field (useful for pausing)
+
+
+Card 
+- Player Id
+- Game id ?
+- Array of players who’ve voted for card
+
+
+
+
+
+
+
+
+Game knows about players
+Players have decks
