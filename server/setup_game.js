@@ -2,26 +2,10 @@ Meteor.methods({
   setupGame: function(gameAttributes) {
 
 
-    //Ensure timer is numeric value
-    var timerValue = parseInt(gameAttributes.timer_value);
-    if (! _.isNumber( timerValue ) || isNaN( timerValue ) ) {
-      throw new Meteor.Error(302, "Must have numeric value for timer");
-    }
-    //Find largest game number and insert
-    var maxGame = Games.findOne({active: 1}, {sort: {number: -1}});
-    var maxGameNumber = 0;
-
-    if(!maxGame)
-      maxGameNumber = 0;
-    else
-      maxGameNumber = maxGame.number + 1;
-
-    var newGameId = Games.insert({
-      number: maxGameNumber,
-      active: 1,
-      votingTime: timerValue,
-      isPaused: false
-    });
+    //Use database access function here
+    newGameId = insertGame(gameAttributes);
+    playerId = addPlayer();
+    addPlayerToGame(newGameId, playerId);
 
     //This will be updated with the logic to decide which cards are in play
     //For now this will take all the cards available

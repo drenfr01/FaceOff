@@ -7,7 +7,7 @@ Template.setup.events({
 
     cardSource = Session.get("source");
 
-
+    //TODO: make this section into separate function
     //Set website base URL call
     if( cardSource  === "upload" ) {
         baseUrl = ".";
@@ -37,12 +37,13 @@ Template.setup.events({
       cardsUrl: fullUrl
     };
 
-    Meteor.call('setupGame', gameAttributes, function(error, number) {
+    Meteor.call('setupGame', gameAttributes, 
+        function(error, gameNumber, playerId) {
       if (error) {
         throwError(error.reason);
         Router.go('setup');
       }
-      Router.go('lobby', {number: number});
+      Router.go('lobby', {gameNumber: gameNumber, playerId: playerId});
     });
   },
   'change #urlChoice': function(e) {
