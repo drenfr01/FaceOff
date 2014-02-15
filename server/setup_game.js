@@ -4,8 +4,8 @@ Meteor.methods({
 
     //Use database access function here
     gameNumber = insertGame(gameAttributes);
-    playerId = addPlayer(gameNumber);
-    addPlayerToGame(gameNumber, playerId);
+    playerId = addPlayer(gameNumber); //this sets player's game
+    addPlayerToGame(gameNumber, playerId); //this sets game's players
 
 
     //This will be updated with the logic to decide which cards are in play
