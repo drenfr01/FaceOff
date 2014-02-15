@@ -45,17 +45,6 @@ Template.setup.events({
       Router.go('lobby', {number: number});
     });
   },
-  //TODO: This is dead code right now
-  'click #checkAPI' : function(e) {
-    e.preventDefault();
-    apiAttributes = {};
-    Meteor.call('getImagesFromAPI', apiAttributes,
-        function(error, number) {
-          if(error) {
-            alert(error.reason);
-          }
-        });
-  },
   'change #urlChoice': function(e) {
     urlOption = $("#urlChoice").val();
     if(urlOption == "other") {
