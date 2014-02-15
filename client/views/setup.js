@@ -11,11 +11,11 @@ Template.setup.events({
     //Set website base URL call
     if( cardSource  === "upload" ) {
         baseUrl = ".";
-    } else if ( cardSource  === "natureporn" ) {
-        baseUrl = "http://www.reddit.com/r/natureporn/";
-    } else if ( cardSource  === "boxers") {
-        baseUrl = "http://www.reddit.com/r/boxers/";
-    } else if ( cardSource === "other" ) {
+    } else if ( cardSource  === "Boxers" ) {
+        baseUrl = "http://www.reddit.com/r/Boxers/";
+    } else if ( cardSource  === "EarthPorn") {
+        baseUrl = "http://www.reddit.com/r/EarthPorn/";
+    } else if ( cardSource === "Other" ) {
       baseUrl = "http://www.reddit.com/r/" + $("#customUrl").val() + "/";
     } else {
       baseUrl = "error";
@@ -78,6 +78,6 @@ Template.setup.helpers({
     return Session.get("source") !== "--" && Session.get("urlEntered");
   },
   isOther: function() {
-    return Session.get("source") === "other";
+    return Session.get("source") === "Other";
    }
 });
