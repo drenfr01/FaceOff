@@ -1,5 +1,5 @@
 addPlayer = function(gameNumber) {
-  return Players.insert();
+  return Players.insert({gameNumber: gameNumber});
 };
 insertGame = function(gameAttributes) {
     //Ensure timer is numeric value
@@ -16,13 +16,15 @@ insertGame = function(gameAttributes) {
     else
       maxGameNumber = maxGame.number + 1;
 
-     return  Games.insert({
+     Games.insert({
       number: maxGameNumber,
       active: 1,
       votingTime: timerValue,
       isPaused: false
     });
+     
+    return maxGameNumber;
 };
-addPlayerToGame = function(gameId, playerId) {
-  Games.update({_id: gameId}, { $push: {players: playerId} });
+addPlayerToGame = function(gameNumber, playerId) {
+  Games.update({number: gameNumber}, { $push: {players: playerId} });
 };

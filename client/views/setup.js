@@ -38,12 +38,13 @@ Template.setup.events({
     };
 
     Meteor.call('setupGame', gameAttributes, 
-        function(error, gameNumber, playerId) {
+        function(error, attributes) {
       if (error) {
         throwError(error.reason);
         Router.go('setup');
       }
-      Router.go('lobby', {gameNumber: gameNumber, playerId: playerId});
+      Router.go('lobby', {gameNumber: attributes.gameNumber, 
+        playerId: attributes.playerId});
     });
   },
   'change #urlChoice': function(e) {

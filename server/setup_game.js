@@ -3,16 +3,17 @@ Meteor.methods({
 
 
     //Use database access function here
-    newGameId = insertGame(gameAttributes);
-    playerId = addPlayer();
-    addPlayerToGame(newGameId, playerId);
+    gameNumber = insertGame(gameAttributes);
+    playerId = addPlayer(gameNumber);
+    addPlayerToGame(gameNumber, playerId);
+
 
     //This will be updated with the logic to decide which cards are in play
     //For now this will take all the cards available
     if(gameAttributes.cardsUrl === "default") {
       Cards.find().forEach(function (card) {
-      Cards.update({_id: card._id}, {$push: {active: maxGameNumber} } );
-      Games.update({number: maxGameNumber}, {$push: {cards: card._id} } );
+      Cards.update({_id: card._id}, {$push: {active: gameNumber} } );
+      Games.update({number: gameNumber}, {$push: {cards: card._id} } );
       });
     } else {
       cardsToInsert = callExternalAPI(gameAttributes.cardsUrl);
@@ -21,20 +22,25 @@ Meteor.methods({
         if(data.data.url.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
 
           card = Cards.insert({path: data.data.url,in_play: [],
-            usersVoting : [], active: maxGameNumber});
+            usersVoting : [], active: gameNumber});
 
-          Games.update({number: maxGameNumber},
+          Games.update({number: gameNumber},
             {$push: {cards: card._id_}});
         }
       });
     }
 
+    console.log("Added Cards");
+
     //Initialize the timer
-    initializeTimer(maxGameNumber, parseInt(gameAttributes.timer_value));
+    initializeTimer(gameNumber, parseInt(gameAttributes.timer_value));
 
-    setUserInGame(gameAttributes.user_id, maxGameNumber);
+    setUserInGame(gameAttributes.user_id, gameNumber);
 
-    return maxGameNumber;
+    return {
+      gameNumber: gameNumber,
+      playerId: playerId
+    };
   },
   removeCard: function(cardId) {
     //TODO: sketchy, does not support multiple games
