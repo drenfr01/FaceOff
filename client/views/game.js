@@ -9,7 +9,7 @@ Template.game.events({
           alert(error.reason);
         } 
         
-        Router.go('inGame', {number: result});
+        Router.go('lobby', {number: result});
       }
     );
   }
