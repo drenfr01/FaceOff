@@ -10,27 +10,16 @@ Meteor.methods({
 
     //This will be updated with the logic to decide which cards are in play
     //For now this will take all the cards available
-    if(gameAttributes.cardsUrl === "default") {
-      Cards.find().forEach(function (card) {
-      Cards.update({_id: card._id}, {$push: {active: gameNumber} } );
-      Games.update({number: gameNumber}, {$push: {cards: card._id} } );
-      });
-    } else {
-      cardsToInsert = callExternalAPI(gameAttributes.cardsUrl);
-      cardsToInsert.forEach(function (data) {
-        //check to make sure we are given image link
-        if(data.data.url.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
 
-          card = Cards.insert({path: data.data.url,in_play: [],
-            usersVoting : [], active: gameNumber});
+    cardsToInsert = callExternalAPI(gameAttributes.cardsUrl);
+    cardsToInsert.forEach(function (data) {
+      //check to make sure we are given image link
+      if(data.data.url.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
 
-          Games.update({number: gameNumber},
-            {$push: {cards: card._id_}});
-        }
-      });
-    }
-
-    console.log("Added Cards");
+        card = addCard(data.data.url, gameNumber);
+        addCardToGame(card, gameNumber);
+      }
+    });
 
     //Initialize the timer
     initializeTimer(gameNumber, parseInt(gameAttributes.timer_value));

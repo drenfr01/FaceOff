@@ -22,9 +22,19 @@ insertGame = function(gameAttributes) {
       votingTime: timerValue,
       isPaused: false
     });
-     
+
     return maxGameNumber;
 };
 addPlayerToGame = function(gameNumber, playerId) {
   Games.update({number: gameNumber}, { $push: {players: playerId} });
 };
+addCard = function(url, gameNumber) {
+  return Cards.insert({path: url,
+    in_play: [],
+    usersVoting : [],
+    active: gameNumber});
+};
+addCardToGame = function(card, gameNumber) {
+  Games.update({number: gameNumber},
+    {$push: {cards: card._id }});
+}
