@@ -8,21 +8,17 @@ Meteor.methods({
 
     playerCount = players.length;
 
-    cards = Games.findOne( { number: gameNumber } ).cards;
+    cardIds = Games.findOne( { number: gameNumber } ).cards;
 
-console.log("CARDS");
-console.log(cards);
     // Keep popping cards off the array looping around the users
-    cards.forEach( function (card) {
+    cardIds.forEach( function (cardId) {
       playerCount --;
-      currentUserId = users[playerCount]._id;
+      currentPlayerId = players[playerCount]._id;
 
-      // TODO: We should call addCardToUser here I think
-      Meteor.users.update( { _id: currentUserId },
-        { $push: { cards: cards._id } } );
+      addCardToPlayer(currentPlayerId, cardId)
 
       if(playerCount === 0) {
-        playerCount = users.length;
+        playerCount = players.length;
       }
     });
 

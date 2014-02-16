@@ -34,9 +34,13 @@ addCard = function(url, gameNumber) {
     usersVoting : [],
     active: gameNumber});
 };
-addCardToGame = function(card, gameNumber) {
+addCardToGame = function(cardId, gameNumber) {
   Games.update({number: gameNumber},
-    {$push: {cards: card._id }});
+    {$push: {cards: cardId }});
+}
+addCardToPlayer = function(playerId, cardId) {
+  Players.update( { _id: playerId },
+    { $push: { cardIds: cardId } } );
 }
 getPlayersInGame = function(gameNumber) {
   return Players.find({gameNumber: gameNumber});

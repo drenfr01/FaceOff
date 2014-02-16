@@ -16,8 +16,8 @@ Meteor.methods({
       //check to make sure we are given image link
       if(data.data.url.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
 
-        card = addCard(data.data.url, gameNumber);
-        addCardToGame(card, gameNumber);
+        cardId = addCard(data.data.url, gameNumber);
+        addCardToGame(cardId, gameNumber);
       }
     });
 
