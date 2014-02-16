@@ -9,6 +9,28 @@ Meteor.methods({
   }
 });
 
+//startVoting will begin the voting after a player enters the game from the lobby
+startVoting = function(gameNumber) {
+  //TODO: expand to more than 2 players
+  players = pickPlayers(2);
+  
+  players.forEach( function(player) {
+    cardId = choosePlayerCard(player);
+    setCardInPlay(cardId);
+   });
+
+  setTimer(gameNumber, getVotingTime(gameNumber), "endVoting");
+};
+
+pickPlayers = function(gameNumber, numPlayers) {
+  game = Game.findOne({number: gameNumber});
+  if(game.players.length <= numPlayers)
+    Meteor.Error(500, "Not enough players in game");
+
+  removeActivePlayers(gameNumber);
+  return updateActivePlayers(gameNumber);
+};
+
 getNextImages = function (gameNumber) {
   //Push users from at_bat back onto the queue of users
   //lastTurnsUsers = Games.findOne( {number: gameNumber} ).atBat

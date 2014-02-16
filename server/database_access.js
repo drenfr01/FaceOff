@@ -37,11 +37,27 @@ addCard = function(url, gameNumber) {
 addCardToGame = function(cardId, gameNumber) {
   Games.update({number: gameNumber},
     {$push: {cards: cardId }});
-}
+};
 addCardToPlayer = function(playerId, cardId) {
   Players.update( { _id: playerId },
     { $push: { cardIds: cardId } } );
-}
+};
 getPlayersInGame = function(gameNumber) {
   return Players.find({gameNumber: gameNumber});
-}
+};
+getActivePlayers = function(gameNumber) {
+
+};
+updateActivePlayers = function(gameNumber) {
+  activePlayers = [];
+  activePlayers.push(Games.findOne({number: gameNumber}, {$pop: {players: -1}}));
+  activePlayers.push(Games.findOne({number: gameNumber}, {$pop: {players: -1}}));
+  Games.findOne({number: gameNumber}, {$push: {activePlayers: {$each: activePlayers}}});
+  return activePlayers;
+};
+removeActivePlayers = function(gameNumber) {
+  game = Games.findOne({number: gameNumber});
+  activePlayers = game.activePlayers;
+  Games.findOne({number: gameNumber}, {$set: {activePlayers: []}});
+  Games.findOne({number: gameNumber}, {$push: {players: {$each: activePlayers}}});
+};
