@@ -66,7 +66,7 @@ getNextPlayerCard = function(playerId) {
 }
 popAndReturnGamePlayer = function(gameNumber) {
   playerId = Games.findOne({number: gameNumber}).players[0];
-  Games.update({number: gameNumber}, {$pop: {players: -1}}));
+  Games.update({number: gameNumber}, {$pop: {players: -1}});
   return playerId;
 }
 popAndReturnPlayerCard = function(playerId) {
