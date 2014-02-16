@@ -14,7 +14,7 @@ decrementTimers = function () {
 runFunction = function (name, gameNumber)
 {
   switch(name) {
-    case "getNextImages": getNextImages(gameNumber); break;
+    case "startVoting": startVoting(gameNumber); break;
     case "endVoting": endVoting(gameNumber); break;
   }
 };

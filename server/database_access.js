@@ -63,14 +63,17 @@ removeActivePlayerIds = function(gameNumber) {
 };
 getNextPlayerCard = function(playerId) {
   return popAndReturnPlayerCard(playerId);
-}
+};
 popAndReturnGamePlayer = function(gameNumber) {
   playerId = Games.findOne({number: gameNumber}).players[0];
   Games.update({number: gameNumber}, {$pop: {players: -1}});
   return playerId;
-}
+};
 popAndReturnPlayerCard = function(playerId) {
   cardId = Players.findOne({_id: playerId}).cards[0];
   Players.update( {_id: playerId }, { $pop: {cardIds: -1} } );
   return cardId;
-}
+};
+updateGamePhase = function(gamePhase) {
+  Games.update({ number: gameNumber }, { $set: { phase: gamePhase} });
+};
