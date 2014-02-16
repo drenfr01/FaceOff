@@ -1,6 +1,9 @@
 Template.inGame.helpers({
   number: function () { return this.number; },
-  displayedImages: function () {return Cards.find({active: this.number, in_play: this.number} ); },
+  displayedImages: function () {
+    cardsInPlay =  Games.findOne({number: this.number}).cardsInPlay; 
+    Cards.find({_id: {$in: cardsInPlay}});
+  },
   time: function() { return Timer.findOne({game: this.number}).time; },
   getUsers: function() {
     //This prevents an undefined error while server updates first time

@@ -2,7 +2,7 @@ Meteor.methods({
   assignCards: function(attributes) {
     // Attributes needs to pass a game number, we can get users and cards from that info
     gameNumber = attributes.gameNumber;
-    playerId = attributes.playerId
+    playerId = attributes.playerId;
 
     players = getPlayersInGame(gameNumber).fetch();
 
@@ -15,18 +15,18 @@ Meteor.methods({
       playerCount --;
       currentPlayerId = players[playerCount]._id;
 
-      addCardToPlayer(currentPlayerId, cardId)
+      addCardToPlayer(currentPlayerId, cardId);
 
       if(playerCount === 0) {
         playerCount = players.length;
       }
     });
 
-    //Get the next images
-    getNextImages(gameNumber);
+    //Start the Game
+    startVoting(gameNumber);
 
-    //"Broadcast" to all users in lobby that were starting game
-    //Meteor.users.update();
+    //TODO: "Broadcast" to all users in lobby that we are starting game
+    ////Meteor.users.update();
 
     return gameNumber;
   }
