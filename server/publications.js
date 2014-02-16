@@ -14,6 +14,7 @@ Meteor.publish('timer', function() {
 
 //TODO limit this particular player for user/game
 Meteor.publish('players', function() {
+  return Players.find();
 });
 
 Meteor.publish("userData", function() {

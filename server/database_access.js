@@ -38,3 +38,6 @@ addCardToGame = function(card, gameNumber) {
   Games.update({number: gameNumber},
     {$push: {cards: card._id }});
 }
+getPlayersInGame = function(gameNumber) {
+  return Players.find({gameNumber: gameNumber});
+}

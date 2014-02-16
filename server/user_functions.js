@@ -28,13 +28,11 @@ Meteor.methods({
 
   //change to upsert to support both new game and join
 setUserInGame = function(userId, gameNumber) {
-  console.log("userId " + userId + " gameNumber: " + gameNumber);
   Meteor.users.update(userId, {$set: {gameNumber: gameNumber}});
  };
 
 Accounts.onCreateUser(function(options, user) {
   //ensure above check of hasVoted is never undefined
-  console.log('New user created!');
   user.hasVoted = 0;
   return user;
 });
