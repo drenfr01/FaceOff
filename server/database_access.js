@@ -45,19 +45,32 @@ addCardToPlayer = function(playerId, cardId) {
 getPlayersInGame = function(gameNumber) {
   return Players.find({gameNumber: gameNumber});
 };
-getActivePlayers = function(gameNumber) {
+getActivePlayerIds = function(gameNumber) {
 
 };
-updateActivePlayers = function(gameNumber) {
-  activePlayers = [];
-  activePlayers.push(Games.findOne({number: gameNumber}, {$pop: {players: -1}}));
-  activePlayers.push(Games.findOne({number: gameNumber}, {$pop: {players: -1}}));
-  Games.findOne({number: gameNumber}, {$push: {activePlayers: {$each: activePlayers}}});
-  return activePlayers;
+updateActivePlayerIds = function(gameNumber) {
+  activePlayerIds = [];
+  activePlayerIds.push(popAndReturnGamePlayer(gameNumber));
+  activePlayerIds.push(popAndReturnGamePlayer(gameNumber));
+  Games.update({number: gameNumber}, {$push: {activePlayerIds: {$each: activePlayerIds}}});
+  return activePlayerIds;
 };
-removeActivePlayers = function(gameNumber) {
+removeActivePlayerIds = function(gameNumber) {
   game = Games.findOne({number: gameNumber});
-  activePlayers = game.activePlayers;
-  Games.findOne({number: gameNumber}, {$set: {activePlayers: []}});
-  Games.findOne({number: gameNumber}, {$push: {players: {$each: activePlayers}}});
+  activePlayerIds = game.activePlayerIds;
+  Games.update({number: gameNumber}, {$set: {activePlayerIds: []}});
+  Games.update({number: gameNumber}, {$push: {players: {$each: activePlayerIds}}});
 };
+getNextPlayerCard = function(playerId) {
+  return popAndReturnPlayerCard(playerId);
+}
+popAndReturnGamePlayer = function(gameNumber) {
+  playerId = Games.findOne({number: gameNumber}).players[0];
+  Games.update({number: gameNumber}, {$pop: {players: -1}}));
+  return playerId;
+}
+popAndReturnPlayerCard = function(playerId) {
+  cardId = Players.findOne({_id: playerId}).cards[0];
+  Players.update( {_id: playerId }, { $pop: {cardIds: -1} } );
+  return cardId;
+}

@@ -12,10 +12,10 @@ Meteor.methods({
 //startVoting will begin the voting after a player enters the game from the lobby
 startVoting = function(gameNumber) {
   //TODO: expand to more than 2 players
-  players = pickPlayers(2);
-  
-  players.forEach( function(player) {
-    cardId = choosePlayerCard(player);
+  playerIds = pickPlayers(2);
+
+  playerIds.forEach( function(playerId) {
+    cardId = getNextPlayerCard(playerId);
     setCardInPlay(cardId);
    });
 
@@ -27,8 +27,8 @@ pickPlayers = function(gameNumber, numPlayers) {
   if(game.players.length <= numPlayers)
     Meteor.Error(500, "Not enough players in game");
 
-  removeActivePlayers(gameNumber);
-  return updateActivePlayers(gameNumber);
+  removeActivePlayerIds(gameNumber);
+  return updateActivePlayerIds(gameNumber);
 };
 
 getNextImages = function (gameNumber) {
