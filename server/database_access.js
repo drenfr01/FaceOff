@@ -62,13 +62,21 @@ removeActivePlayerIds = function(gameNumber) {
   Games.update({number: gameNumber}, {$push: {players: {$each: activePlayerIds}}});
 };
 getNextPlayerCard = function(playerId) {
-  return popAndReturnPlayerCard(playerId);
+  cardId = popAndReturnPlayerCard(playerId);
+  Players.update({_id: playerId}, {$push : {cardIds: cardId}});
+  return cardId;
 };
+//This does NOT add the player back onto the queue. That is the calling
+//functions responsibility
 popAndReturnGamePlayer = function(gameNumber) {
   playerId = Games.findOne({number: gameNumber}).players[0];
   Games.update({number: gameNumber}, {$pop: {players: -1}});
   return playerId;
 };
+//This does NOT add the card back onto the players deck. That is the
+//calling functions responsibility. This will allow cards to "be stolen"
+//in elimination games and such
+//TODO: add checks to make sure we have cards
 popAndReturnPlayerCard = function(playerId) {
   cardId = Players.findOne({_id: playerId}).cardIds[0];
   Players.update( {_id: playerId }, { $pop: {cardIds: -1} } );
