@@ -1,6 +1,6 @@
 Template.displayedImage.helpers({
   path: function() {return this.path;},
-  votes: function() {return this.usersVoting.length;},
+  votes: function() {return this.playerVotes.length;},
   //get phase from game to see if we show votes or not
   phase: function() {
     game = Games.findOne({number: Meteor.user().gameNumber});
@@ -10,10 +10,9 @@ Template.displayedImage.helpers({
 
 Template.displayedImage.events({
   'click .crop': function() {
-    //Voting data model:
-    //add userIDs to image, sum for count,
-    //Dumb way: adding has_voted flag to userId, flip it
-    Meteor.call('voteForImage', Meteor.userId(), this._id,
+    //this session variable created in setup.js
+    currentPlayerId = Session.get("playerId");
+    Meteor.call('voteForImage', currentPlayerId, this.playerId, this._id,
       function(error, response) {
         if(error)
           throwError(error.reason);

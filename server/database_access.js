@@ -1,5 +1,5 @@
 addPlayer = function(gameNumber) {
-  return Players.insert({gameNumber: gameNumber});
+  return Players.insert({gameNumber: gameNumber, hasVoted: 0});
 };
 insertGame = function(gameAttributes) {
     //Ensure timer is numeric value
@@ -31,7 +31,7 @@ addPlayerToGame = function(gameNumber, playerId) {
 addCard = function(url, gameNumber) {
   return Cards.insert({path: url,
     in_play: [],
-    usersVoting : [],
+    playerVotes : [],
     active: gameNumber});
 };
 addCardToGame = function(cardId, gameNumber) {
@@ -41,6 +41,7 @@ addCardToGame = function(cardId, gameNumber) {
 addCardToPlayer = function(playerId, cardId) {
   Players.update( { _id: playerId },
     { $push: { cardIds: cardId } } );
+  Cards.update({_id: cardId}, {$set: {playerId: playerId}});
 };
 getPlayersInGame = function(gameNumber) {
   return Players.find({gameNumber: gameNumber});
@@ -90,4 +91,13 @@ setCardInPlay = function(gameNumber, cardId) {
 };
 removeCardsInPlay = function(gameNumber) {
   Games.update({ number: gameNumber}, {$set: {cardsInPlay: [] } });
+};
+setPlayerVote = function(playerId) {
+  Players.update({_id: playerId}, {$set: {hasVoted: 1}});
+};
+removePlayerVote = function(playerId) {
+  Players.update({_id: playerId}, {$set: {hasVoted: 0}});
+};
+addPlayerVoteToCard = function(playerId, cardId) {
+      Cards.update({_id: cardId}, {$push: {playerVotes: playerId}});
 };

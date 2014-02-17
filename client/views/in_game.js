@@ -19,7 +19,7 @@ Template.inGame.helpers({
     return Session.get('usersInGame');
   },
   hasVoted: function() {
-    return Meteor.user().hasVoted === 1;
+    return Players.findOne({_id: Session.get("playerId")}).hasVoted === 1;
   },
   votingPhase: function() {
     return this.game.phase === "Voting";

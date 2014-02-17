@@ -11,7 +11,6 @@ Meteor.methods({
 
 //startVoting will begin the voting after a player enters the game from the lobby
 startVoting = function(gameNumber) {
-  console.log("Starting Voting");
   removeCardsInPlay(gameNumber);
 
   //TODO: expand to more than 2 players
@@ -20,6 +19,7 @@ startVoting = function(gameNumber) {
   playerIds.forEach( function(playerId) {
     cardId = getNextPlayerCard(playerId);
     setCardInPlay(gameNumber, cardId);
+    removePlayerVote(playerId); //allow player to vote on new cards
    });
   //Set phase of game
   updateGamePhase(gameNumber, "Voting");
@@ -33,7 +33,6 @@ pickPlayers = function(gameNumber, numPlayers) {
 };
 
 endVoting = function(gameNumber) {
-  console.log("Ending voting");
   updateGamePhase(gameNumber, "Display");
   
   // Start the next round in 3 seconds
