@@ -14,21 +14,21 @@ startVoting = function(gameNumber) {
 
   //TODO: expand to more than 2 players
   playerIds = pickPlayers(gameNumber, 2);
-  console.log("Player Ids: " + playerIds);
 
   playerIds.forEach( function(playerId) {
     cardId = getNextPlayerCard(playerId);
-    setCardInPlay(cardId);
+    setCardInPlay(gameNumber, cardId);
+    console.log("Card Id: " + cardId);
    });
   //Set phase of game
   updateGamePhase(gameNumber, "Voting");
 
-  setTimer(gameNumber, getVotingTime(gameNumber), "endVoting");
+  //setTimer(gameNumber, getVotingTime(gameNumber), "endVoting");
 };
 
 pickPlayers = function(gameNumber, numPlayers) {
   game = Games.findOne({number: gameNumber});
-  if(game.players.length <= numPlayers)
+  if(game.players.length < numPlayers)
     throw Meteor.Error(500, "Not enough players in game");
 
   removeActivePlayerIds(gameNumber);

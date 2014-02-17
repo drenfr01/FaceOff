@@ -70,7 +70,6 @@ popAndReturnGamePlayer = function(gameNumber) {
   return playerId;
 };
 popAndReturnPlayerCard = function(playerId) {
-  console.log("Player: " + Players.findOne({_id: playerId}));
   cardId = Players.findOne({_id: playerId}).cardIds[0];
   Players.update( {_id: playerId }, { $pop: {cardIds: -1} } );
   return cardId;

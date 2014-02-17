@@ -2,9 +2,13 @@ Meteor.methods({
   getUsersInGame: function(gameId) {
     return Meteor.users.find({gameNumber: gameId}).fetch();
   },
-  joinUserToGame: function(userId, gameNumber) {
-    setUserInGame(userId, gameNumber);
-    return gameNumber;
+  addPlayerToGame: function(gameNumber) {
+    playerId = addPlayer(gameNumber);
+    addPlayerToGame(gameNumber, playerId);
+    return {
+      gameNumber: gameNumber,
+      playerId: playerId
+    };
   },
   voteForImage: function(userId, imageId) {
       user = Meteor.users.findOne({_id: userId});
