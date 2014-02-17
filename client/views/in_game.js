@@ -5,18 +5,20 @@ Template.inGame.helpers({
     return Cards.find({_id: {$in: cardsInPlay}});
   },
   time: function() { return Timer.findOne({game: this.game.number}).time; },
-  getUsers: function() {
+  //TODO: this is the same as the code in lobby. we should refactor this to
+  //common function
+  getPlayers: function() {
     //This prevents an undefined error while server updates first time
-    Session.setDefault('usersInGame',[{emails: [{address: []}]}]);
+    Session.setDefault('playersInGame',[]);
     Meteor.call('getPlayersInGame', this.game.number,
-      function(error, users) {
+      function(error, names) {
           if(error) {
             throwError(error.reason);
           }
     //      data[this.number] = users;
-          Session.set('usersInGame', users);
+          Session.set('playersInGame', names);
       });
-    return Session.get('usersInGame');
+    return Session.get('playersInGame');
   },
   hasVoted: function() {
     return Players.findOne({_id: Session.get("playerId")}).hasVoted === 1;
