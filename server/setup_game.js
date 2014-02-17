@@ -1,10 +1,8 @@
 Meteor.methods({
   setupGame: function(gameAttributes) {
-
-
-    //Use database access function here
+  
     gameNumber = insertGame(gameAttributes);
-    playerId = addPlayer(gameNumber); //this sets player's game
+    playerId = addPlayer(gameNumber, gameAttributes.email); //this sets player's game
     addPlayerToGame(gameNumber, playerId); //this sets game's players
 
 

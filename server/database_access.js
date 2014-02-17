@@ -1,5 +1,6 @@
-addPlayer = function(gameNumber) {
-  return Players.insert({gameNumber: gameNumber, hasVoted: 0});
+addPlayer = function(gameNumber, email) {
+  //currently name is just user's email account
+  return Players.insert({gameNumber: gameNumber, hasVoted: 0, name: email});
 };
 insertGame = function(gameAttributes) {
     //Ensure timer is numeric value

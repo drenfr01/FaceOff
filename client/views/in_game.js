@@ -8,7 +8,7 @@ Template.inGame.helpers({
   getUsers: function() {
     //This prevents an undefined error while server updates first time
     Session.setDefault('usersInGame',[{emails: [{address: []}]}]);
-    Meteor.call('getUsersInGame', this.game.number,
+    Meteor.call('getPlayersInGame', this.game.number,
       function(error, users) {
           if(error) {
             throwError(error.reason);

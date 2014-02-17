@@ -34,6 +34,7 @@ Template.setup.events({
     var gameAttributes = {
       timer_value: timerValue,
       user_id: Meteor.user(),
+      email: Meteor.user().emails[0].address,
       cardsUrl: fullUrl
     };
 

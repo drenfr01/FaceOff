@@ -1,17 +1,15 @@
 Template.lobby.helpers({
-  getUsers: function() {
+  getPlayers: function() {
     //This prevents an undefined error while server updates first time
-    Session.setDefault('usersInGame',[{emails: [{address: []}]}]);
-    console.log(this);
-    console.log(this.game.phase);
-    Meteor.call('getUsersInGame', this.game.number,
-      function(error, users) {
+    Session.setDefault('playersInGame',[]);
+    Meteor.call('getPlayersInGame', this.game.number,
+      function(error, names) {
           if(error) {
             throwError(error.reason);
           }
-          Session.set('usersInGame', users);
+          Session.set('playersInGame', names);
       });
-    return Session.get('usersInGame');
+    return Session.get('playersInGame');
   },
   beginGame: function() {
       },

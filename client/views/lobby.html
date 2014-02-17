@@ -1,12 +1,9 @@
 <template name="lobby">
   <h1> Fucking lobby</h1>
-  <h3>Game phase {{gamePhase}}</h3>
   <div class="col-md-2">
-    <p>List of Active Users</p>
-    {{#each getUsers}}
-      {{#each emails}}
-        {{address}}
-      {{/each}}
+    <p>Players In Lobby</p>
+    {{#each getPlayers}}
+      {{name}}
     {{/each}}
   </div>
   <div class="row text-center">

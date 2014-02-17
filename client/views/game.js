@@ -3,7 +3,11 @@ Template.game.events({
     //need a call to server side message to update users
     //TODO: add hook to make sure user logged in
 
-    Meteor.call('addPlayerToGame', this.number, 
+    attributes = {
+      gameNumber: this.number,
+      email: Meteor.user().emails[0].address
+    };
+    Meteor.call('addPlayerToGame', attributes, 
       function(error, attributes) {
         if(error) {
           alert(error.reason);
