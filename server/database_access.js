@@ -20,7 +20,8 @@ insertGame = function(gameAttributes) {
       number: maxGameNumber,
       active: 1,
       votingTime: timerValue,
-      isPaused: false
+      isPaused: false,
+      phase: "Lobby"
     });
 
     return maxGameNumber;

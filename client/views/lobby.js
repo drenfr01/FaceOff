@@ -2,6 +2,8 @@ Template.lobby.helpers({
   getUsers: function() {
     //This prevents an undefined error while server updates first time
     Session.setDefault('usersInGame',[{emails: [{address: []}]}]);
+    console.log(this);
+    console.log(this.game.phase);
     Meteor.call('getUsersInGame', this.game.number,
       function(error, users) {
           if(error) {
@@ -11,6 +13,14 @@ Template.lobby.helpers({
       });
     return Session.get('usersInGame');
   },
+  beginGame: function() {
+      },
+  gamePhase: function() {
+    if(this.game.phase !== "Lobby") 
+      Router.go('inGame', {gameNumber: this.game.number, 
+        playerId: Session.get("playerId")});
+    return this.game.phase;
+  }
 });
 
 Template.lobby.events({
@@ -20,7 +30,7 @@ Template.lobby.events({
     var attributes = {
       gameNumber: this.game.number,
       playerId: this.player._id
-    }
+    };
     Meteor.call('assignCards', attributes, function(error, number) {
       if (error) {
         throwError(error.reason);
@@ -31,4 +41,4 @@ Template.lobby.events({
         playerId: attributes.playerId});
     });
   }
-})
+});

@@ -46,6 +46,8 @@ Template.setup.events({
       //Not sure about using sessions like this, but currently need it
       //for the card voting. We should re-visit this decision (security hole?)
       Session.set("playerId", attributes.playerId);
+      console.log("Game: " + attributes.gameNumber);
+      console.log("Player: " + attributes.playerId);
       Router.go('lobby', {gameNumber: attributes.gameNumber, 
         playerId: attributes.playerId});
     });

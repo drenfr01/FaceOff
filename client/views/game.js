@@ -9,6 +9,7 @@ Template.game.events({
           alert(error.reason);
         } 
         
+        Session.set("playerId", attributes.playerId);         
         Router.go('lobby', {gameNumber: attributes.gameNumber, 
           playerId: attributes.playerId});
       }
