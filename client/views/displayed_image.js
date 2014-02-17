@@ -3,6 +3,7 @@ Template.displayedImage.helpers({
   votes: function() {return this.usersVoting.length;},
   //get phase from game to see if we show votes or not
   phase: function() {
+    console.log("Game phase: " + this);
     game = Games.findOne({number: Meteor.user().gameNumber});
     return game.phase === "Display";
   }

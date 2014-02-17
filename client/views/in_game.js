@@ -2,7 +2,7 @@ Template.inGame.helpers({
   number: function () { return this.game.number; },
   displayedImages: function () {
     cardsInPlay =  this.game.cardsInPlay; 
-    Cards.find({_id: {$in: cardsInPlay}});
+    return Cards.find({_id: {$in: cardsInPlay}});
   },
   time: function() { return Timer.findOne({game: this.game.number}).time; },
   getUsers: function() {
