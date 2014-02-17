@@ -11,6 +11,7 @@ Meteor.methods({
 
 //startVoting will begin the voting after a player enters the game from the lobby
 startVoting = function(gameNumber) {
+  console.log("Starting Voting");
 
   //TODO: expand to more than 2 players
   playerIds = pickPlayers(gameNumber, 2);
@@ -18,24 +19,21 @@ startVoting = function(gameNumber) {
   playerIds.forEach( function(playerId) {
     cardId = getNextPlayerCard(playerId);
     setCardInPlay(gameNumber, cardId);
-    console.log("Card Id: " + cardId);
    });
   //Set phase of game
   updateGamePhase(gameNumber, "Voting");
 
-  //setTimer(gameNumber, getVotingTime(gameNumber), "endVoting");
+  console.log("Setting up Timer");
+  setTimer(gameNumber, getVotingTime(gameNumber), "endVoting");
 };
 
 pickPlayers = function(gameNumber, numPlayers) {
-  game = Games.findOne({number: gameNumber});
-  if(game.players.length < numPlayers)
-    throw Meteor.Error(500, "Not enough players in game");
-
   removeActivePlayerIds(gameNumber);
   return updateActivePlayerIds(gameNumber);
 };
 
 endVoting = function(gameNumber) {
+  console.log("Ending voting");
   updateGamePhase(gameNumber, "Display");
   
   //TODO: remove cards in play in the game

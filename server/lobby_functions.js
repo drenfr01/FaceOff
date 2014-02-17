@@ -22,6 +22,11 @@ Meteor.methods({
       }
     });
 
+    //TODO: ensure 2 people are playing game
+    game = Games.findOne({number: gameNumber});
+    if(game.players.length < 2)
+      throw Meteor.Error(500, "Not enough players in game");
+
     //Start the Game
     startVoting(gameNumber);
 
