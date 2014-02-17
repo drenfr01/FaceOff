@@ -18,6 +18,7 @@ startVoting = function(gameNumber) {
 
   playerIds.forEach( function(playerId) {
     cardId = getNextPlayerCard(playerId);
+    removePlayerVotesFromCard(cardId); //remove previous votes
     setCardInPlay(gameNumber, cardId);
     removePlayerVote(playerId); //allow player to vote on new cards
    });
