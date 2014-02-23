@@ -7,6 +7,18 @@ Template.displayedImage.helpers({
     game = Games.findOne({number: player.gameNumber});
     return game.phase === "Display";
   }
+  //TODO: this causes massive number of calls, and prevents voting
+  /*
+  playerVoters: function() {
+    Session.set("playerVoters",[]);
+    Meteor.call('getPlayerVoters', this._id, function(error, names) {
+      if(error)
+        throwError(error.reason);
+      Session.set("playerVoters",names);
+    });
+    return Session.get("playerVoters"); 
+  }
+  */
 });
 
 Template.displayedImage.events({
