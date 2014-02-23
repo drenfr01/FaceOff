@@ -59,6 +59,24 @@ setCardInPlay = function(gameNumber, cardId) {
   Games.update({ number: gameNumber }, { $push: { cardsInPlay: cardId } });
 };
 removeCardsInPlay = function(gameNumber) {
+  // Figure out which card won
+  currentCards = Games.findOne({number: gameNumber}).cardsInPlay;
+  winningCardId = null
+  maxVotes = -1
+  currentCards.forEach( function(cardId) {
+    if (maxVotes < getCardVotes(cardId)) {
+      winningCardId = cardId
+    };
+  });
+
+  // Figure out which player that card belongs to
+  winningPlayerId = Cards.findOne({_id: winningCardId}).playerId
+
+  // Give the losing card to the winning player
+  currentCards.forEach( function(cardId) {
+    Players.update({_id: winningPlayerId}, {$push : {cardIds: cardId}});
+  });
+
   Games.update({ number: gameNumber}, {$set: {cardsInPlay: [] } });
 };
 

@@ -20,7 +20,8 @@ getPlayersInGame = function(gameNumber) {
 
 getNextPlayerCard = function(playerId) {
   cardId = popAndReturnPlayerCard(playerId);
-  Players.update({_id: playerId}, {$push : {cardIds: cardId}});
+  // This now occurs at the end of a round
+  //Players.update({_id: playerId}, {$push : {cardIds: cardId}});
   return cardId;
 };
 

@@ -2,21 +2,24 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "npm": {},
-      "iron-router": {},
-      "bootstrap-3": {},
-      "mocha-web": {}
+      "npm": {
+        "version": "0.2.6"
+      },
+      "iron-router": {
+        "version": "0.6.3"
+      },
+      "bootstrap-3": {
+        "version": "3.1.0-1"
+      },
+      "mocha-web": {
+        "version": "0.1.7"
+      }
     },
     "packages": {
       "npm": {
         "git": "https://github.com/arunoda/meteor-npm.git",
         "tag": "v0.2.6",
         "commit": "177ab6118de5bf8cffb19481343d5762ff7a2aaf"
-      },
-      "iron-router": {
-        "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.6.3",
-        "commit": "79861385df5d2b667630ec82abe4de3efa3166e3"
       },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
