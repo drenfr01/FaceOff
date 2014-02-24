@@ -79,4 +79,3 @@ removeCardsInPlay = function(gameNumber) {
 
   Games.update({ number: gameNumber}, {$set: {cardsInPlay: [] } });
 };
-
