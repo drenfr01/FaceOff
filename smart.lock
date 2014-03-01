@@ -2,10 +2,18 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "npm": {},
-      "iron-router": {},
-      "bootstrap-3": {},
-      "mocha-web": {}
+      "npm": {
+        "version": "0.2.6"
+      },
+      "iron-router": {
+        "version": "0.6.3"
+      },
+      "bootstrap-3": {
+        "version": "3.1.0-1"
+      },
+      "mocha-web": {
+        "version": "0.1.7"
+      }
     },
     "packages": {
       "npm": {

@@ -11,3 +11,6 @@ removePlayerVotesFromCard = function(cardId) {
   //TODO: push statistics from card up to "image" or to user history
   Cards.update({_id: cardId}, {$set: {playerVotes: []}});
 };
+getCardVotes = function (cardId) {
+  Cards.findOne( {_id: cardId } ).playerVotes.length
+}

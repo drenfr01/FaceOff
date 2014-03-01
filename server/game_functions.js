@@ -35,7 +35,7 @@ pickPlayers = function(gameNumber, numPlayers) {
 
 endVoting = function(gameNumber) {
   updateGamePhase(gameNumber, "Display");
-  
+
   // Start the next round in 3 seconds
   setTimer(gameNumber, 3, "startVoting");
 };
