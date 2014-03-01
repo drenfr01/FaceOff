@@ -12,5 +12,5 @@ removePlayerVotesFromCard = function(cardId) {
   Cards.update({_id: cardId}, {$set: {playerVotes: []}});
 };
 getCardVotes = function (cardId) {
-  Cards.findOne( {_id: cardId } ).playerVotes.length
-}
+  return Cards.findOne( {_id: cardId } ).playerVotes.length;
+};

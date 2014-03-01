@@ -11,7 +11,9 @@ Meteor.methods({
 
 //startVoting will begin the voting after a player enters the game from the lobby
 startVoting = function(gameNumber) {
-  removeCardsInPlay(gameNumber);
+  //Do not run when players first join game
+  if(getCardsInPlay(gameNumber).length > 0)
+    removeCardsInPlay(gameNumber);
 
   //TODO: expand to more than 2 players
   playerIds = pickPlayers(gameNumber, 2);
