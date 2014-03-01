@@ -12,6 +12,11 @@
     {{/if}}
 
   </div>
+  <div class="row">
+    <input type="button" value="Toggle Game Overview" id="gameOverviewButton" class="btn btn-info">
+    {{#if gameOverviewToggled}}
+      {{> gameOverview}}
+    {{/if}}
   <div class="row col-md-offset-2">
     <div class="text-center">
       {{#each displayedImages}}

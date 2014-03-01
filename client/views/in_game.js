@@ -27,8 +27,15 @@ Template.inGame.helpers({
   },
   pauseGame: function() {
     return this.game.isPaused;
+  },
+  gameOverviewToggled: function() {
+    return Session.get('gameOverviewToggled');
   }
 });
+
+Template.inGame.created = function() {
+  Session.set('gameOverviewToggled',false);
+};
 
 Template.inGame.events({
   'click #pauseButton': function(e) {
@@ -48,5 +55,11 @@ Template.inGame.events({
           throwError(error.reason);
         }
       });
+  },
+  'click #gameOverviewButton': function(e) {
+    e.preventDefault();
+    console.log('Clicked');
+    //flip the gameOverviewToggled boolean
+    Session.set('gameOverviewToggled',!Session.get('gameOverviewToggled'));
   }
 });
