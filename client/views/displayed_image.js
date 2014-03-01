@@ -12,6 +12,14 @@ Template.displayedImage.helpers({
   },
   cardsRemaining: function() {
     return Players.findOne({_id: this.playerId}).cardIds.length;
+  },
+  playersVotingForCard: function() {
+    playerNames = []; 
+    this.playerVotes.forEach( function(playerId) {
+      playerNames.push(Players.findOne(playerId).name);
+    });
+    return playerNames;
+
   }
   //TODO: this causes massive number of calls, and prevents voting
   /*

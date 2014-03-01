@@ -4,9 +4,12 @@
     <p>Cards Remaining: {{cardsRemaining}}</p>
     <div id="{{path}}" class="crop">
       <img class ="img-responsive img-rounded" src="{{path}}" alt="An Image">
-   </div>
+    </div>
+    <div class="listOfUsers">
+      <h4>Players Voting for this Card</h4>
+      {{playersVotingForCard}}
+    </div>
   </div>
-  <div>
   <div class="row">
     {{#if phase}}
       <button type="submit" class="btn btn-default btn-lg" id="removeCard">Remove Card</button>
