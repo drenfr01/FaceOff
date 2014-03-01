@@ -91,7 +91,7 @@ suite('Players', function() {
         [options.cardId1,options.cardId2]);
 
       assert.deepEqual(options.playerAfter.cardIds,
-        [options.cardId2,options.cardId1]);
+        [options.cardId2]);
       done();
     });
   });

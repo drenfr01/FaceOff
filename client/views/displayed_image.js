@@ -6,6 +6,12 @@ Template.displayedImage.helpers({
     player = Players.findOne({_id: Session.get("playerId")});
     game = Games.findOne({number: player.gameNumber});
     return game.phase === "Display";
+  },
+  cardOwner: function() {
+    return Players.findOne({_id: this.playerId}).name;
+  },
+  cardsRemaining: function() {
+    return Players.findOne({_id: this.playerId}).cardIds.length;
   }
   //TODO: this causes massive number of calls, and prevents voting
   /*

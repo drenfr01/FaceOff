@@ -15,7 +15,6 @@ Template.inGame.helpers({
           if(error) {
             throwError(error.reason);
           }
-    //      data[this.number] = users;
           Session.set('playersInGame', names);
       });
     return Session.get('playersInGame');
