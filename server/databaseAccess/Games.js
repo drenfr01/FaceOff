@@ -19,7 +19,9 @@ insertGame = function(gameAttributes) {
       active: 1,
       votingTime: timerValue,
       isPaused: false,
-      phase: "Lobby"
+      phase: "Lobby",
+      activePlayerIds: [],
+      cardsInPlay: []
     });
 
     return maxGameNumber;
@@ -30,6 +32,9 @@ addCardToGame = function(cardId, gameNumber) {
     {$push: {cards: cardId }});
 };
 
+//TODO: Update will NOT work unless removeActivePlayerIds is called 
+//before it (with the exception of the first time). 
+//This kind of link isn't great
 updateActivePlayerIds = function(gameNumber) {
   activePlayerIds = [];
   activePlayerIds.push(popAndReturnGamePlayer(gameNumber));
@@ -39,8 +44,7 @@ updateActivePlayerIds = function(gameNumber) {
 };
 
 removeActivePlayerIds = function(gameNumber) {
-  //This sets the activePlayerIds to a blank array when the game first starts
-  activePlayerIds = Games.findOne({number: gameNumber}).activePlayerIds || [];
+  activePlayerIds = Games.findOne({number: gameNumber}).activePlayerIds;
   Games.update({number: gameNumber}, {$set: {activePlayerIds: []}});
   Games.update({number: gameNumber}, {$push: {players: {$each: activePlayerIds}}});
 };
