@@ -2,18 +2,10 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "npm": {
-        "version": "0.2.6"
-      },
-      "iron-router": {
-        "version": "0.6.3"
-      },
-      "bootstrap-3": {
-        "version": "3.1.0-1"
-      },
-      "mocha-web": {
-        "version": "0.1.7"
-      }
+      "npm": {},
+      "iron-router": {},
+      "bootstrap-3": {},
+      "mocha-web": {}
     },
     "packages": {
       "npm": {
@@ -23,8 +15,8 @@
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.6.3",
-        "commit": "79861385df5d2b667630ec82abe4de3efa3166e3"
+        "tag": "v0.6.4",
+        "commit": "927bbaed1b87894fb6fb70807f74ff3a5bd89f29"
       },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
@@ -33,8 +25,8 @@
       },
       "mocha-web": {
         "git": "https://github.com/mad-eye/meteor-mocha-web.git",
-        "tag": "v0.1.7",
-        "commit": "53028d5aae963ec8cf2d28a28ccd840286a98994"
+        "tag": "v0.2.1",
+        "commit": "2b60becd1d82b61a3612b841256431e67c3f392b"
       }
     }
   }

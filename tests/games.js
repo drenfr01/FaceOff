@@ -4,17 +4,11 @@ suite('Games', function() {
 
   test('adding a Game', function(done, server) {
     server.eval(function() {
-      attributes = {
-        timer_value: 5
-      };
-      gameNumber1 = insertGame(attributes);
-      gameNumber2 = insertGame(attributes);
+      fixtures = setupBasicGame(); 
       docs = Games.find().fetch();
-      game1 = Games.findOne({number: gameNumber1});
-      game2 = Games.findOne({number: gameNumber2});
       options = {
-        game1: game1,
-        game2: game2,
+        game1: fixtures.game1,
+        game2: fixtures.game2,
         docs: docs
       };
       emit('options',options);
@@ -35,21 +29,11 @@ suite('Games', function() {
   });
   test('adding card to game', function(done, server) {
     server.eval(function() {
-      attributes = {
-        timer_value: 5
-      };
-      gameNumber1 = insertGame(attributes);
-      cardId1 = addCard('www.image1.com',gameNumber1);
-      cardId2 = addCard('www.image2.com',gameNumber1);
-
-      addCardToGame(cardId1, gameNumber1);
-      addCardToGame(cardId2, gameNumber1);
-
-      game = Games.findOne({number: gameNumber1});
+      fixtures = setupBasicGame();
 
       options = {
-        game: game,
-        cardIds: [cardId1, cardId2]
+        game: fixtures.game1,
+        cardIds: [fixtures.cardId1, fixtures.cardId2]
       };
 
       emit('options',options);
@@ -62,32 +46,29 @@ suite('Games', function() {
   });
   test('updating Active Players', function(done, server) {
     server.eval(function() {
-      gameNumber = 0;
-      attributes = {
-        timer_value: 5
-      };
-      gameNumber1 = insertGame(attributes);
-      playerId1 = addPlayer(gameNumber, 'test1@gmail.com');
-      playerId2 = addPlayer(gameNumber, 'test2@gmail.com');
-      playerId3 = addPlayer(gameNumber, 'test3@gmail.com');
-      addPlayerToGame(gameNumber, playerId1);
-      addPlayerToGame(gameNumber, playerId2);
-      addPlayerToGame(gameNumber, playerId3);
 
-      gameBeforeUpdate = Games.findOne({number: gameNumber});
-      updateActivePlayerIds(gameNumber);
-      gameAfterFirstUpdate = Games.findOne({number: gameNumber});
-      removeActivePlayerIds(gameNumber);
-      updateActivePlayerIds(gameNumber);
-      gameAfterSecondUpdate = Games.findOne({number: gameNumber});
-      removeActivePlayerIds(gameNumber);
-      updateActivePlayerIds(gameNumber);
-      gameAfterThirdUpdate = Games.findOne({number: gameNumber});
+      fixtures = setupBasicGame();
+
+      gameBeforeUpdate = Games.findOne({number: fixtures.gameNumber1});
+      updateActivePlayerIds(fixtures.gameNumber1);
+
+      gameAfterFirstUpdate = Games.findOne(
+        {number: fixtures.gameNumber1});
+      removeActivePlayerIds(fixtures.gameNumber1);
+      updateActivePlayerIds(fixtures.gameNumber1);
+
+      gameAfterSecondUpdate = Games.findOne(
+        {number: fixtures.gameNumber1});
+      removeActivePlayerIds(fixtures.gameNumber1);
+      updateActivePlayerIds(fixtures.gameNumber1);
+
+      gameAfterThirdUpdate = Games.findOne(
+        {number: fixtures.gameNumber1});
 
       options = {
-        playerId1: playerId1,
-        playerId2: playerId2,
-        playerId3: playerId3,
+        playerId1: fixtures.playerId1,
+        playerId2: fixtures.playerId2,
+        playerId3: fixtures.playerId3,
         gameState1: gameBeforeUpdate,
         gameState2: gameAfterFirstUpdate,
         gameState3: gameAfterSecondUpdate,
@@ -122,25 +103,15 @@ suite('Games', function() {
   });
   test('removing Active Players', function(done, server) {
     server.eval(function() {
-      gameNumber = 0;
-      attributes = {
-        timer_value: 5
-      };
-      gameNumber1 = insertGame(attributes);
-      playerId1 = addPlayer(gameNumber, 'test1@gmail.com');
-      playerId2 = addPlayer(gameNumber, 'test2@gmail.com');
-      playerId3 = addPlayer(gameNumber, 'test3@gmail.com');
-      addPlayerToGame(gameNumber, playerId1);
-      addPlayerToGame(gameNumber, playerId2);
-      addPlayerToGame(gameNumber, playerId3);
+      fixtures = setupBasicGame();
 
-      updateActivePlayerIds(gameNumber1);
+      updateActivePlayerIds(fixtures.gameNumber1);
 
-      gameStateBefore = Games.findOne({number: gameNumber1});
+      gameStateBefore = Games.findOne({number: fixtures.gameNumber1});
 
-      removeActivePlayerIds(gameNumber1);
+      removeActivePlayerIds(fixtures.gameNumber1);
 
-      gameStateAfter = Games.findOne({number: gameNumber1});
+      gameStateAfter = Games.findOne({number: fixtures.gameNumber1});
 
       options = {
         gameState1: gameStateBefore,
@@ -165,15 +136,11 @@ suite('Games', function() {
   });
   test('updating game phase', function(done, server) {
     server.eval(function() {
-      gameNumber = 0;
-      attributes = {
-        timer_value: 5
-      };
-      gameNumber1 = insertGame(attributes);
+      fixtures = setupBasicGame();
 
-      gameStateBefore = Games.findOne({number: gameNumber});
-      updateGamePhase(gameNumber, 'Voting');
-      gameStateAfter = Games.findOne({number: gameNumber});
+      gameStateBefore = Games.findOne({number: fixtures.gameNumber1});
+      updateGamePhase(fixtures.gameNumber1, 'Voting');
+      gameStateAfter = Games.findOne({number: fixtures.gameNumber1});
       options = {
         gameState1: gameStateBefore,
         gameState2: gameStateAfter
@@ -189,24 +156,13 @@ suite('Games', function() {
   });
   test('set card in play', function(done, server) {
     server.eval(function() {
-      gameNumber = 0;
-      attributes = {
-        timer_value: 5
-      };
-      gameNumber1 = insertGame(attributes);
-      cardId1 = addCard('www.image1.com',gameNumber1);
-      cardId2 = addCard('www.image2.com',gameNumber1);
-      cardId3 = addCard('www.image3.com',gameNumber1);
+      fixtures = setupBasicGame();
 
-      addCardToGame(cardId1, gameNumber1);
-      addCardToGame(cardId2, gameNumber1);
-      addCardToGame(cardId3, gameNumber1);
-
-      gameState1 = Games.findOne({number: gameNumber});
-      setCardInPlay(gameNumber, cardId1);
-      gameState2 = Games.findOne({number: gameNumber});
-      setCardInPlay(gameNumber, cardId2);
-      gameState3 = Games.findOne({number: gameNumber});
+      gameState1 = Games.findOne({number: fixtures.gameNumber1});
+      setCardInPlay(fixtures.gameNumber1, fixtures.cardId1);
+      gameState2 = Games.findOne({number: fixtures.gameNumber1});
+      setCardInPlay(fixtures.gameNumber1, fixtures.cardId2);
+      gameState3 = Games.findOne({number: fixtures.gameNumber1});
 
       options = {
         gameState1: gameState1,
@@ -229,24 +185,13 @@ suite('Games', function() {
   });
   test('remove cards in play', function(done, server) {
     server.eval(function() {
-      gameNumber = 0;
-      attributes = {
-        timer_value: 5
-      };
-      gameNumber1 = insertGame(attributes);
-      cardId1 = addCard('www.image1.com',gameNumber1);
-      cardId2 = addCard('www.image2.com',gameNumber1);
-      cardId3 = addCard('www.image3.com',gameNumber1);
+      fixtures = setupBasicGame();
 
-      addCardToGame(cardId1, gameNumber1);
-      addCardToGame(cardId2, gameNumber1);
-      addCardToGame(cardId3, gameNumber1);
-
-      setCardInPlay(gameNumber, cardId1);
-      setCardInPlay(gameNumber, cardId2);
-      gameState1 = Games.findOne({number: gameNumber});
-      removeCardsInPlay(gameNumber);
-      gameState2 = Games.findOne({number: gameNumber});
+      setCardInPlay(fixtures.gameNumber1, fixtures.cardId1);
+      setCardInPlay(fixtures.gameNumber1, fixtures.cardId2);
+      gameState1 = Games.findOne({number: fixtures.gameNumber1});
+      removeCardsInPlay(fixtures.gameNumber1);
+      gameState2 = Games.findOne({number: fixtures.gameNumber1});
 
 
       options = {
