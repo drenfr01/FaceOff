@@ -9,8 +9,8 @@ preserve-inputs
 npm
 iron-router
 bootstrap-3
-accounts-ui
 accounts-password
 http
 underscore
 mocha-web
+accounts-ui-bootstrap-3

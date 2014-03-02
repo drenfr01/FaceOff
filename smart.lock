@@ -2,10 +2,21 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "npm": {},
-      "iron-router": {},
-      "bootstrap-3": {},
-      "mocha-web": {}
+      "npm": {
+        "version": "0.2.6"
+      },
+      "iron-router": {
+        "version": "0.6.4"
+      },
+      "bootstrap-3": {
+        "version": "3.1.0-1"
+      },
+      "mocha-web": {
+        "version": "0.2.1"
+      },
+      "accounts-ui-bootstrap-3": {
+        "version": "0.2.5"
+      }
     },
     "packages": {
       "npm": {
@@ -27,6 +38,11 @@
         "git": "https://github.com/mad-eye/meteor-mocha-web.git",
         "tag": "v0.2.1",
         "commit": "2b60becd1d82b61a3612b841256431e67c3f392b"
+      },
+      "accounts-ui-bootstrap-3": {
+        "git": "https://github.com/mangasocial/meteor-accounts-ui-bootstrap-3.git",
+        "tag": "v0.2.5",
+        "commit": "91cd37a1320213dd209c3a668bf542eeb9c39a00"
       }
     }
   }

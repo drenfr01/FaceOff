@@ -3,6 +3,7 @@
     "npm": {},
     "iron-router": {},
     "bootstrap-3": {},
-    "mocha-web": {}
+    "mocha-web": {},
+    "accounts-ui-bootstrap-3": {}
   }
 }
