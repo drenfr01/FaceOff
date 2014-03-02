@@ -1,6 +1,12 @@
 addPlayer = function(gameNumber, email) {
   //currently name is just user's email account
-  return Players.insert({gameNumber: gameNumber, hasVoted: 0, name: email});
+  return Players.insert(
+      {
+        gameNumber: gameNumber,
+        hasVoted: 0,
+        name: email,
+        cardIds: []
+      });
 };
 
 addPlayerToGame = function(gameNumber, playerId) {

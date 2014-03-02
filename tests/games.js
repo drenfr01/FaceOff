@@ -183,27 +183,54 @@ suite('Games', function() {
       done();
     });
   });
+  //TODO: expand test to cover ties
   test('remove cards in play', function(done, server) {
     server.eval(function() {
       fixtures = setupBasicGame();
 
-      setCardInPlay(fixtures.gameNumber1, fixtures.cardId1);
-      setCardInPlay(fixtures.gameNumber1, fixtures.cardId2);
-      gameState1 = Games.findOne({number: fixtures.gameNumber1});
-      removeCardsInPlay(fixtures.gameNumber1);
-      gameState2 = Games.findOne({number: fixtures.gameNumber1});
+      //Note: we see here that setCardInPlay and getNextPlayerCard
+      //are linked, so we need to call both to properly
+      //set both the players deck and the game's active cards
+      setCardInPlay(fixtures.gameNumber1, 
+        getNextPlayerCard(fixtures.playerId1));
+      setCardInPlay(fixtures.gameNumber1, 
+        getNextPlayerCard(fixtures.playerId2));
+      //Vote for Card 1, which belongs to player1
+      addPlayerVoteToCard(fixtures.playerId1, fixtures.cardId1);
+      addPlayerVoteToCard(fixtures.playerId2, fixtures.cardId1);
 
+      console.log("Winning card belongs to: " + 
+        Cards.findOne(fixtures.cardId1).playerId + " " +  playerId1);
+
+      gameState1 = Games.findOne({number: fixtures.gameNumber1});
+      
+      removeCardsInPlay(fixtures.gameNumber1);
+      //Grab players and game state after removing cards
+      gameState2 = Games.findOne({number: fixtures.gameNumber1});
+      player1 = Players.findOne(fixtures.playerId1);
+      player2 = Players.findOne(fixtures.playerId2);
 
       options = {
         gameState1: gameState1,
         gameState2: gameState2,
+        player1: player1,
+        player2: player2,
+        cardId1: fixtures.cardId1,
+        cardId2: fixtures.cardId2
       };
       emit('options',options);
     });
 
     server.once('options', function(options) {
+      //Test that removeCards clears cards in play
+      //Test that removeCards rmeoves card from losers deck
       assert.equal(options.gameState1.cardsInPlay.length,2);
       assert.equal(options.gameState2.cardsInPlay.length,0);
+      //Test that removeCards pushes both cards to winners deck
+      //TODO: should we test order of cards pushed back on?
+      assert.equal(options.player1.cardIds.length, 2);
+      //Test that removeCards does not push card back to losers deck
+      assert.equal(options.player2.cardIds.length, 0);
       done();
     });
   });

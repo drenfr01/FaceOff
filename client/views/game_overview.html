@@ -2,8 +2,10 @@
 <div class="container">
   <div class="row">
     <h3>Game Overview</h3>
-    <!-- Need to make this an {{each}} -->
-    <p>Players in Game: {{playersInGame}}</p>
+      <p>Players in Game</p>
+      {{#each playersInGame}}
+        <p> Name: {{name}} Cards Remaining: {{cardsLeft}} </p>
+      {{/each}}
     <p>Deck 1: </p>
     <p>Deck 2: </p>
     <hr/>

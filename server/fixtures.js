@@ -29,6 +29,10 @@ setupBasicGame = function() {
     addPlayerToGame(gameNumber1, playerId1);
     addPlayerToGame(gameNumber1, playerId2);
     addPlayerToGame(gameNumber1, playerId3);
+
+    //Add Cards to Players
+    addCardToPlayer(playerId1, cardId1);
+    addCardToPlayer(playerId2, cardId2);
     
     //Get games after they're fully setup (game 2 is blank)
     game1 = Games.findOne({number: gameNumber1});
