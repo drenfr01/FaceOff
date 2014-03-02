@@ -78,4 +78,36 @@ suite('Cards', function() {
       done();
     });
   });
+  test('getting Card Votes from a card', function(done, server) {
+    server.eval(function() {
+      fixtures = setupBasicGame();
+
+      //Note: we see here that setCardInPlay and getNextPlayerCard
+      //are linked, so we need to call both to properly
+      //set both the players deck and the game's active cards
+      setCardInPlay(fixtures.gameNumber1, 
+        getNextPlayerCard(fixtures.playerId1));
+      setCardInPlay(fixtures.gameNumber1, 
+        getNextPlayerCard(fixtures.playerId2));
+      //Vote for Card 1, which belongs to player1
+      addPlayerVoteToCard(fixtures.playerId1, fixtures.cardId1);
+      addPlayerVoteToCard(fixtures.playerId2, fixtures.cardId1);
+
+      card1 = Cards.findOne(fixtures.cardId1);
+      card2 = Cards.findOne(fixtures.cardId2);
+
+      options = {
+        card1: card1,
+        card2: card2
+      };
+
+      emit('options', options);
+    });
+
+    server.once('options', function(options) {
+      assert.equal(options.card1.playerVotes.length, 2);
+      assert.equal(options.card2.playerVotes.length, 0);
+      done();
+    });
+  });
 });
