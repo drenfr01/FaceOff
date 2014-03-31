@@ -6,11 +6,10 @@
 standard-app-packages
 insecure
 npm
-bootstrap-3
-accounts-password
 http
 underscore
 mocha-web
-accounts-ui-bootstrap-3
-accounts-ui-bootstrap-dropdown
 iron-router
+accounts-ui-bootstrap-3
+accounts-password
+bootstrap-3

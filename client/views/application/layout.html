@@ -18,13 +18,13 @@
           <li><a href="/">Demo</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          {{loginButtons}}
+          {{> loginButtons}}
         </ul>
       </div>
     </nav>
     {{> errors}}
     <div id="main" class="row">
-      {{yield}}
+      {{> yield}}
     </div>
   </div>
 </template>
